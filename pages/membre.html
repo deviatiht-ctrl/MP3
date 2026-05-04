@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espace Manm | MP3</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/membre.css">
+  
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  
+  <script src="../assets/js/supabase-client.js" defer></script>
+  <script src="../assets/js/i18n.js" defer></script>
+  <script src="../assets/js/auth.js" defer></script>
+  <script src="../assets/js/membre.js" defer></script>
+</head>
+<body class="membre-body">
+  <aside class="membre-sidebar">
+    <div class="membre-sidebar-brand">
+      <a href="../index.html">
+        <img src="../assets/MP3LOGO.png" alt="MP3">
+      </a>
+    </div>
+    <nav class="membre-sidebar-nav">
+      <button class="membre-nav-item active" data-tab="home">
+        <i data-lucide="home" style="width: 18px; height: 18px;"></i>
+        <span>Akèy</span>
+      </button>
+      <button class="membre-nav-item" data-tab="profile">
+        <i data-lucide="user" style="width: 18px; height: 18px;"></i>
+        <span>Dosye Mwen</span>
+      </button>
+      <button class="membre-nav-item" data-tab="agenda">
+        <i data-lucide="calendar" style="width: 18px; height: 18px;"></i>
+        <span>Ajanda</span>
+      </button>
+      <button class="membre-nav-item" data-tab="messages">
+        <i data-lucide="mail" style="width: 18px; height: 18px;"></i>
+        <span>Mesaj</span>
+      </button>
+      <button class="membre-nav-item" data-tab="settings">
+        <i data-lucide="settings" style="width: 18px; height: 18px;"></i>
+        <span>Paramèt</span>
+      </button>
+    </nav>
+    <div class="membre-sidebar-footer">
+      <a href="../index.html" class="membre-nav-item" style="margin-bottom: 0.5rem;">
+        <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+        <span>Tounen sou Sit la</span>
+      </a>
+      <button class="membre-logout-btn membre-sidebar-logout" onclick="Auth.signOut()">
+        <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+        <span>Dekonekte</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="membre-main">
+    <header class="membre-header">
+      <h1 class="membre-page-title">Akèy</h1>
+      <div class="membre-header-actions">
+        <span id="memberName">Byenveni</span>
+      </div>
+    </header>
+
+    <div class="membre-content">
+      <div class="membre-tab-content active" data-tab="home">
+        <div class="membre-id-card">
+          <div class="membre-id-photo-wrap">
+            <img src="../assets/img/logo-placeholder.svg" alt="" class="membre-id-photo">
+          </div>
+          <div class="membre-id-info">
+            <span class="membre-id-status pending">Chajman...</span>
+            <h2 class="membre-id-name">...</h2>
+            <span class="membre-id-code">...</span>
+            <div class="membre-id-meta"></div>
+          </div>
+          <button class="btn btn-sm btn-ghost membre-id-download" onclick="MembreDashboard.downloadCertificate()">
+            <i data-lucide="download" style="width: 14px; height: 14px;"></i>
+            Sètifika
+          </button>
+        </div>
+
+        <div class="membre-quick-stats">
+          <div class="membre-stat-card">
+            <span class="membre-stat-value">0</span>
+            <span class="membre-stat-label">Evènman patisipe</span>
+          </div>
+          <div class="membre-stat-card">
+            <span class="membre-stat-value">0</span>
+            <span class="membre-stat-label">Don fè</span>
+          </div>
+          <div class="membre-stat-card">
+            <span class="membre-stat-value">0</span>
+            <span class="membre-stat-label">Mesaj</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="membre-tab-content" data-tab="profile" style="display: none;">
+        <div class="membre-profile-section">
+          <h3>Enfòmasyon Pèsonèl</h3>
+          <div class="membre-profile-grid"></div>
+        </div>
+      </div>
+
+      <div class="membre-tab-content" data-tab="agenda" style="display: none;">
+        <div class="membre-agenda-section">
+          <h3>Evènman Mwen Enskri</h3>
+          <div class="membre-agenda-list"></div>
+        </div>
+      </div>
+
+      <div class="membre-tab-content" data-tab="messages" style="display: none;">
+        <div class="membre-messages-empty">
+          <i data-lucide="inbox" style="width: 48px; height: 48px; color: var(--clr-text-muted);"></i>
+          <p>Pa gen mesaj pou kounye a.</p>
+        </div>
+      </div>
+
+      <div class="membre-tab-content" data-tab="settings" style="display: none;">
+        <div class="membre-settings-section">
+          <h3>Preferans</h3>
+          <div class="form-group">
+            <label class="form-label">Lang</label>
+            <select class="form-select" id="languageSelect">
+              <option value="ht">Kreyòl Ayisyen</option>
+              <option value="fr">Français</option>
+              <option value="en">English</option>
+              <option value="es">Español</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Notifikasyon</label>
+            <div class="form-checkbox">
+              <label><input type="checkbox" checked> <span>Imèl evènman</span></label>
+            </div>
+            <div class="form-checkbox">
+              <label><input type="checkbox" checked> <span>Nouvèl pati a</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

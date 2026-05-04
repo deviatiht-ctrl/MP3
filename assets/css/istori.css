@@ -1,0 +1,168 @@
+/* ========================================
+   MP3 - Istwa (History) Page Styles
+   ======================================== */
+
+/* Page Layout */
+.page-content {
+  padding-top: calc(var(--navbar-height) + var(--space-8));
+  min-height: 100vh;
+  background: var(--clr-bg);
+}
+
+.content-wrapper {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+}
+
+/* Page Header */
+.page-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--clr-black);
+  margin-bottom: var(--space-4);
+}
+
+.page-subtitle {
+  font-size: var(--text-xl);
+  color: var(--clr-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* History Content */
+.history-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.history-section {
+  background: var(--clr-bg-soft);
+  padding: var(--space-8);
+  border-radius: var(--radius-lg);
+  border-left: 4px solid var(--clr-gold);
+}
+
+.history-section h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--clr-black);
+  margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.history-section h2::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--clr-gold);
+  border-radius: 50%;
+}
+
+.history-section p {
+  font-size: var(--text-base);
+  color: var(--clr-text-secondary);
+  line-height: 1.8;
+}
+
+/* Pillars Grid */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  margin-top: var(--space-6);
+}
+
+.pillar-card {
+  background: var(--clr-bg);
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--clr-border);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.pillar-card:hover {
+  border-color: var(--clr-gold);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-4px);
+}
+
+.pillar-card h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--clr-gold);
+  margin-bottom: var(--space-3);
+}
+
+.pillar-card p {
+  font-size: var(--text-sm);
+  color: var(--clr-text-secondary);
+  line-height: 1.6;
+}
+
+/* Commitment List */
+.commitment-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.commitment-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--clr-bg);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  color: var(--clr-text);
+}
+
+.commitment-list li i {
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: var(--text-3xl);
+  }
+  
+  .page-subtitle {
+    font-size: var(--text-lg);
+  }
+  
+  .history-section {
+    padding: var(--space-6);
+  }
+  
+  .pillars-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .commitment-list li {
+    font-size: var(--text-sm);
+  }
+}

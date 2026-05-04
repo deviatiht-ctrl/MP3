@@ -1,0 +1,230 @@
+/* ========================================
+   MP3 - Desktop Navbar
+   Glassmorphic Telegram-style pill navbar
+   ======================================== */
+
+.navbar {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: calc(100% - 32px);
+  max-width: 1200px;
+  padding: 12px 28px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(201, 160, 0, 0.2);
+  border-radius: 999px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+/* Logo Section */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.navbar-logo {
+  height: 48px;
+  width: auto;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  object-fit: contain;
+}
+
+.navbar-party-name {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clr-black);
+  white-space: nowrap;
+}
+
+/* Navigation Links */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  justify-content: center;
+}
+
+.navbar-link {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--clr-text);
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.navbar-link:hover {
+  background: rgba(201, 160, 0, 0.1);
+  color: var(--clr-gold);
+}
+
+.navbar-link.active {
+  background: rgba(201, 160, 0, 0.15);
+  color: var(--clr-gold);
+  font-weight: 600;
+}
+
+.navbar-link-accent {
+  background: var(--clr-gold);
+  color: var(--clr-white);
+}
+
+.navbar-link-accent:hover {
+  background: var(--clr-gold-light);
+  color: var(--clr-black);
+}
+
+/* Right Section */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.navbar-btn {
+  padding: 8px 20px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--clr-text);
+  border: 1px solid var(--clr-border);
+}
+
+.btn-secondary:hover {
+  background: rgba(201, 160, 0, 0.1);
+  border-color: var(--clr-gold);
+}
+
+.navbar-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  color: var(--clr-text);
+  transition: all 0.2s ease;
+}
+
+.navbar-icon-btn:hover {
+  background: rgba(201, 160, 0, 0.1);
+  color: var(--clr-gold);
+}
+
+/* Language Switcher */
+.navbar-lang {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  background: rgba(201, 160, 0, 0.08);
+  border-radius: 999px;
+}
+
+.navbar-lang-btn {
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--clr-text-muted);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.navbar-lang-btn:hover {
+  color: var(--clr-gold);
+}
+
+.navbar-lang-btn.active {
+  color: var(--clr-gold);
+  font-weight: 700;
+  background: rgba(201, 160, 0, 0.15);
+}
+
+/* Admin Button */
+.navbar-admin-btn {
+  display: none;
+}
+
+.navbar-admin-btn.visible {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--clr-gold);
+  color: var(--clr-black);
+  transition: all 0.2s ease;
+}
+
+.navbar-admin-btn:hover {
+  background: var(--clr-gold-light);
+  transform: scale(1.02);
+}
+
+/* Navbar Scroll State */
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Hide navbar on mobile */
+@media (max-width: 768px) {
+  .navbar {
+    display: none;
+  }
+}
+
+/* Responsive adjustments for tablet */
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 10px 20px;
+    max-width: 95%;
+  }
+  
+  .navbar-party-name {
+    display: none;
+  }
+  
+  .navbar-links {
+    gap: var(--space-1);
+  }
+  
+  .navbar-link {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}

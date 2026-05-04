@@ -1,0 +1,317 @@
+/* ========================================
+   MP3 - Membership Page Styles
+   ======================================== */
+
+/* Page Layout */
+.member-container {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-12);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+  align-items: start;
+}
+
+/* Left Column - Form */
+.member-left {
+  background: var(--clr-bg);
+  border-radius: var(--radius-lg);
+}
+
+.member-header {
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 2px solid var(--clr-gold);
+}
+
+.member-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--clr-text-secondary);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-4);
+  transition: color 0.2s ease;
+}
+
+.member-back:hover {
+  color: var(--clr-gold);
+}
+
+.member-title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--clr-black);
+  margin-bottom: var(--space-3);
+}
+
+.member-desc {
+  font-size: var(--text-lg);
+  color: var(--clr-text-secondary);
+}
+
+/* Form Sections */
+.form-section {
+  background: var(--clr-bg-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.form-section h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--clr-black);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--clr-border);
+}
+
+/* Form Grid - 2 columns */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.form-group-full {
+  grid-column: 1 / -1;
+}
+
+/* Form Elements */
+.form-label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--clr-text);
+  margin-bottom: var(--space-2);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  background: var(--clr-bg);
+  font-size: var(--text-base);
+  color: var(--clr-text);
+  transition: all 0.2s ease;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--clr-gold);
+  box-shadow: 0 0 0 3px rgba(201, 160, 0, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Checkbox Group */
+.form-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.form-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  cursor: pointer;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  transition: background 0.2s ease;
+}
+
+.form-checkbox:hover {
+  background: var(--clr-bg);
+}
+
+.form-checkbox input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--clr-gold);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.form-checkbox span {
+  font-size: var(--text-sm);
+  color: var(--clr-text);
+  line-height: 1.5;
+}
+
+/* Actions */
+.member-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--clr-border);
+}
+
+.member-actions .btn-lg {
+  padding: var(--space-4) var(--space-10);
+  font-size: var(--text-lg);
+}
+
+.member-login-link {
+  font-size: var(--text-base);
+  color: var(--clr-text-secondary);
+}
+
+.member-login-link a {
+  color: var(--clr-gold);
+  font-weight: 600;
+}
+
+.member-login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Right Column - Info */
+.member-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--space-8));
+}
+
+.member-info-card {
+  background: linear-gradient(135deg, var(--clr-gold) 0%, #D4A017 100%);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  color: var(--clr-black);
+}
+
+.member-info-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+}
+
+.member-info-card h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-5);
+}
+
+.member-benefits {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.member-benefits li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-base);
+}
+
+.member-benefits li i {
+  flex-shrink: 0;
+}
+
+/* Stats */
+.member-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.member-stat-item {
+  background: var(--clr-bg-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+}
+
+.member-stat-number {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--clr-gold);
+  margin-bottom: var(--space-1);
+}
+
+.member-stat-label {
+  font-size: var(--text-sm);
+  color: var(--clr-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .member-container {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .member-right {
+    position: static;
+    order: -1;
+  }
+
+  .member-stats {
+    display: flex;
+    justify-content: center;
+  }
+
+  .member-stat-item {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 640px) {
+  .member-container {
+    padding: var(--space-4);
+  }
+
+  .member-title {
+    font-size: var(--text-3xl);
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .member-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+
+  .member-actions .btn-lg {
+    width: 100%;
+  }
+
+  .member-login-link {
+    text-align: center;
+  }
+
+  .member-info-card {
+    padding: var(--space-6);
+  }
+}

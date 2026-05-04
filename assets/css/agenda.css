@@ -1,0 +1,308 @@
+/* ========================================
+   MP3 - Agenda/Events Page Styles
+   ======================================== */
+
+/* Page Layout - Sticky Footer */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-content {
+  flex: 1;
+  padding-top: calc(var(--navbar-height) + var(--space-12));
+  padding-bottom: var(--space-20);
+  background: var(--clr-bg);
+}
+
+/* Also support old class name */
+.agenda-page {
+  padding-top: calc(var(--navbar-height) + var(--space-12));
+  padding-bottom: var(--space-20);
+  min-height: 100vh;
+  background: var(--clr-bg);
+}
+
+/* Agenda Filter */
+.agenda-filters,
+.agenda-filter {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.agenda-filter-group {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.agenda-filter-btn {
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--clr-text-secondary);
+  background: var(--clr-bg-soft);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+}
+
+.agenda-filter-btn:hover {
+  background: rgba(201, 160, 0, 0.1);
+  color: var(--clr-gold);
+}
+
+.agenda-filter-btn.active {
+  background: var(--clr-gold);
+  color: var(--clr-black);
+}
+
+/* Events List */
+.agenda-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.agenda-event-card {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: var(--space-6);
+  background: var(--clr-bg);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  transition: all var(--transition-base);
+}
+
+.agenda-event-card:hover {
+  border-color: var(--clr-gold);
+  box-shadow: var(--shadow-md);
+  transform: translateX(8px);
+}
+
+.agenda-event-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--clr-bg-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  text-align: center;
+  min-width: 100px;
+}
+
+.agenda-event-day {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--clr-gold);
+  line-height: 1;
+}
+
+.agenda-event-month {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--clr-text-secondary);
+  margin-top: var(--space-1);
+}
+
+.agenda-event-year {
+  font-size: var(--text-xs);
+  color: var(--clr-text-muted);
+  margin-top: var(--space-1);
+}
+
+.agenda-event-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.agenda-event-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--clr-black);
+  margin-bottom: var(--space-3);
+  line-height: 1.3;
+}
+
+.agenda-event-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--clr-text-secondary);
+}
+
+.agenda-event-meta span {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.agenda-event-meta svg {
+  color: var(--clr-gold);
+  width: 16px;
+  height: 16px;
+}
+
+.agenda-event-desc {
+  font-size: var(--text-sm);
+  color: var(--clr-text-muted);
+  margin-top: var(--space-3);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.agenda-event-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.agenda-event-image {
+  width: 100%;
+  max-width: 200px;
+  aspect-ratio: 16/10;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.agenda-event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* RSVP Badge */
+.rsvp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  margin-top: var(--space-3);
+}
+
+.rsvp-badge.open {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--clr-success);
+}
+
+.rsvp-badge.closed {
+  background: rgba(154, 154, 154, 0.1);
+  color: var(--clr-text-muted);
+}
+
+.rsvp-badge.full {
+  background: rgba(204, 0, 0, 0.1);
+  color: var(--clr-red);
+}
+
+/* Empty State */
+.agenda-empty {
+  text-align: center;
+  padding: var(--space-20) var(--space-6);
+}
+
+.agenda-empty-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-6);
+  color: var(--clr-gold);
+  opacity: 0.5;
+}
+
+.agenda-empty-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--clr-black);
+  margin-bottom: var(--space-3);
+}
+
+.agenda-empty-text {
+  font-size: var(--text-base);
+  color: var(--clr-text-secondary);
+}
+
+/* Calendar View Toggle */
+.agenda-view-toggle {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+.agenda-view-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--clr-text-secondary);
+  background: var(--clr-bg-soft);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.agenda-view-btn:hover {
+  color: var(--clr-gold);
+}
+
+.agenda-view-btn.active {
+  background: var(--clr-gold);
+  color: var(--clr-black);
+}
+
+/* Calendar Styles */
+.agenda-calendar {
+  background: var(--clr-bg);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  min-height: 500px;
+}
+
+@media (max-width: 768px) {
+  .agenda-event-card {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .agenda-event-date {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+  
+  .agenda-event-day {
+    font-size: var(--text-2xl);
+  }
+  
+  .agenda-event-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .agenda-event-image {
+    max-width: 100%;
+    aspect-ratio: 16/9;
+  }
+}

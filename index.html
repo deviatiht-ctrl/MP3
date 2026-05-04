@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MP3 — Mouvman Pèp pou Pwosperite ak Pwogrè</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./assets/css/variables.css">
+  <link rel="stylesheet" href="./assets/css/main.css">
+  <link rel="stylesheet" href="./assets/css/navbar.css">
+  <link rel="stylesheet" href="./assets/css/mobile-nav.css">
+  <link rel="stylesheet" href="./assets/css/hero.css">
+  <link rel="stylesheet" href="./assets/css/sections.css">
+  
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  
+  <script src="assets/js/supabase-client.js" defer></script>
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/auth.js" defer></script>
+  <script src="assets/js/navbar.js" defer></script>
+  <script src="assets/js/site-stats.js" defer></script>
+  <script src="assets/js/hero.js" defer></script>
+  <script src="assets/js/homepage.js" defer></script>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="navbar-content">
+      <a href="index.html" class="navbar-brand">
+        <img src="assets/MP3LOGO.png" alt="MP3" class="navbar-logo" id="logo">
+        <span class="navbar-party-name">Mouvman Pèp pou Pwosperite ak Pwogrè</span>
+      </a>
+      <div class="navbar-links">
+        <a href="index.html" class="navbar-link active" data-i18n="nav.home">Akèy</a>
+        <a href="pages/istori.html" class="navbar-link" data-i18n="nav.history">Istwa</a>
+        <a href="pages/candidats.html" class="navbar-link" data-i18n="nav.candidates">Kandida</a>
+        <a href="pages/agenda.html" class="navbar-link" data-i18n="nav.agenda">Ajanda</a>
+        <a href="pages/actualites.html" class="navbar-link" data-i18n="nav.news">Aktualite</a>
+        <a href="pages/don.html" class="navbar-link navbar-link-accent" data-i18n="nav.donate">Don</a>
+      </div>
+      <div class="navbar-actions">
+        <div class="navbar-lang">
+          <button class="navbar-lang-btn" data-lang="ht">HT</button>
+          <button class="navbar-lang-btn" data-lang="fr">FR</button>
+          <button class="navbar-lang-btn" data-lang="en">EN</button>
+          <button class="navbar-lang-btn" data-lang="es">ES</button>
+        </div>
+        <button class="navbar-btn btn-secondary" onclick="window.location.href='pages/devenir-membre.html'" data-i18n="nav.member">Manm</button>
+        <button class="navbar-icon-btn" id="authBtn" title="Konekte">
+          <i data-lucide="user"></i>
+        </button>
+        <button class="navbar-icon-btn navbar-admin-btn" id="adminBtn" title="Admin" style="display:none;">
+          <i data-lucide="settings"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-content">
+      <a href="index.html" class="mobile-nav-item active" data-page="home">
+        <i data-lucide="home"></i>
+        <span>Akèy</span>
+      </a>
+      <a href="pages/candidats.html" class="mobile-nav-item" data-page="candidats">
+        <i data-lucide="users"></i>
+        <span>Kandida</span>
+      </a>
+      <a href="pages/don.html" class="mobile-nav-item mobile-nav-donate" data-page="don">
+        <i data-lucide="heart"></i>
+        <span>Don</span>
+      </a>
+      <a href="pages/agenda.html" class="mobile-nav-item" data-page="agenda">
+        <i data-lucide="calendar"></i>
+        <span>Ajanda</span>
+      </a>
+      <a href="pages/devenir-membre.html" class="mobile-nav-item" data-page="member">
+        <i data-lucide="user-plus"></i>
+        <span>Manm</span>
+      </a>
+    </div>
+  </nav>
+
+  <header class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <p class="hero-eyebrow" data-i18n="hero.eyebrow">MP3 — Mouvman Pèp pou Pwosperite ak Pwogrè</p>
+        <h1 class="hero-headline" data-i18n="hero.headline">Nap koupe fache,<br>Nap chanje</h1>
+        <p class="hero-devise" data-i18n="hero.devise">KOMINOTE · EKITE · EFISYANS</p>
+        <div class="hero-cta">
+          <a href="pages/devenir-membre.html" class="hero-btn btn-secondary" data-i18n="hero.cta_member">Vin Manm MP3</a>
+          <a href="pages/don.html" class="hero-btn btn-gold" data-i18n="hero.cta_donate">Fè yon Don</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat" data-stat="active_members">
+            <span class="hero-stat-number" data-target="2847">2,847</span>
+            <span class="hero-stat-label" data-i18n="hero.stats_members">Manm Aktif</span>
+          </div>
+          <div class="hero-stat" data-stat="departments">
+            <span class="hero-stat-number" data-target="10">10</span>
+            <span class="hero-stat-label" data-i18n="hero.stats_departments">Depatman</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-logo-display">
+          <img src="assets/MP3LOGO.png" alt="MP3 — Mouvman Pèp pou Pwosperite ak Pwogrè" class="hero-logo-img">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section section-mission" id="mission">
+      <div class="container">
+        <h2 class="section-title" data-i18n="mission.title">Misyon Nou</h2>
+        <div class="mission-pillars">
+          <div class="mission-pillar">
+            <div class="mission-pillar-icon">
+              <i data-lucide="users" style="width: 32px; height: 32px; color: var(--clr-accent);"></i>
+            </div>
+            <h3 class="mission-pillar-title" data-i18n="mission.community">Kominote</h3>
+            <p class="mission-pillar-desc" data-i18n="mission.community_desc">Nou kwè nan fòs kominote nou yo. Nou travay ansanm pou bati yon sosyete pi jis.</p>
+          </div>
+          <div class="mission-pillar">
+            <div class="mission-pillar-icon">
+              <i data-lucide="scale" style="width: 32px; height: 32px; color: var(--clr-accent);"></i>
+            </div>
+            <h3 class="mission-pillar-title" data-i18n="mission.equity">Ekite</h3>
+            <p class="mission-pillar-desc" data-i18n="mission.equity_desc">Nou lite pou yon sistèm kote tout moun gen menm chans pou reyisi.</p>
+          </div>
+          <div class="mission-pillar">
+            <div class="mission-pillar-icon">
+              <i data-lucide="zap" style="width: 32px; height: 32px; color: var(--clr-accent);"></i>
+            </div>
+            <h3 class="mission-pillar-title" data-i18n="mission.efficiency">Efisyans</h3>
+            <p class="mission-pillar-desc" data-i18n="mission.efficiency_desc">N angaje nou pou jere byen resous peyi a ak transparans.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-candidats" id="candidats">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title" data-i18n="candidates.title">Nou Kandida Yo</h2>
+          <a href="pages/candidats.html" class="section-link" data-i18n="candidates.view_all">
+            Wè Tout Kandida Yo
+            <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+          </a>
+        </div>
+        <div class="candidats-grid">
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-actualites" id="actualites">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title" data-i18n="news.title">Aktualite Resan</h2>
+          <a href="pages/actualites.html" class="section-link" data-i18n="news.view_all">
+            Tout Aktualite
+            <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+          </a>
+        </div>
+        <div class="actualites-grid">
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-agenda" id="agenda">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title" data-i18n="agenda.title">Ajanda Pwochen</h2>
+          <a href="pages/agenda.html" class="section-link" data-i18n="agenda.register">
+            Enskri
+            <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+          </a>
+        </div>
+        <div class="agenda-timeline">
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-don" id="don">
+      <div class="don-container">
+        <div class="don-content">
+          <h2 class="don-title" data-i18n="donation.title">Ede nou chanje Ayiti. Chak don fè diferans.</h2>
+          <p class="don-desc">Kontribisyon ou ede nou finanse kanpay nou yo ak sipòte kominote nou yo.</p>
+          <div class="don-total">
+            <span class="don-total-value">0</span>
+            <span class="don-total-currency">HTG</span>
+            <span class="don-total-label" data-i18n="donation.total_raised">Total Ranmase</span>
+          </div>
+          <a href="pages/don.html" class="don-btn btn-gold" data-i18n="nav.donate">Fè yon Don</a>
+        </div>
+        <div class="don-image">
+          <img src="assets/MP3LOGO.png" alt="MP3" loading="lazy" style="max-height: 200px; width: auto; object-fit: contain;">
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-membre" id="membre">
+      <div class="membre-container">
+        <h2 class="membre-title" data-i18n="membership.title">Vin Manm MP3</h2>
+        <p class="membre-desc">Rejwenn yon mouvman ki dedye a chanje Ayiti. Vin pati yon fanmi ki kwè nan demokrasi, transparans, ak pwogrè.</p>
+        <div class="membre-conditions">
+          <h3 data-i18n="membership.conditions_title">Kondisyon pou Manm</h3>
+          <ul>
+            <li data-i18n="membership.condition_1">Mwen deklare m pa manm okenn lòt pati politik</li>
+            <li data-i18n="membership.condition_2">Mwen angaje pou defann valè ak enterè MP3</li>
+            <li data-i18n="membership.condition_3">Mwen aksepte estati ak règleman entèn pati a</li>
+            <li data-i18n="membership.condition_4">Mwen jwi tout dwa sivil mwen</li>
+          </ul>
+        </div>
+        <div class="membre-cta">
+          <a href="pages/devenir-membre.html" class="membre-btn btn-gold" data-i18n="membership.register_now">Enskri Kounye a</a>
+          <a href="assets/docs/formulaire.pdf" class="membre-btn btn-outline" data-i18n="membership.download_form">Telechaje Fòm</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="assets/MP3LOGO.png" alt="MP3" class="footer-logo">
+        <span class="footer-party-name">Mouvman Pèp pou Pwosperite ak Pwogrè</span>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4 data-i18n="footer.quick_links">Lyen Rapide</h4>
+          <ul>
+            <li><a href="pages/istori.html" data-i18n="nav.history">Istwa</a></li>
+            <li><a href="pages/candidats.html" data-i18n="nav.candidates">Kandida</a></li>
+            <li><a href="pages/actualites.html" data-i18n="nav.news">Aktualite</a></li>
+            <li><a href="pages/agenda.html" data-i18n="nav.agenda">Ajanda</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.contact">Kontak</h4>
+          <ul>
+            <li>contact@mp3-ayiti.ht</li>
+            <li>+509 00 00 00 00</li>
+            <li>Delmas, Pòtoprens, Ayiti</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.social">Rezo Sosyal</h4>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i data-lucide="share-2"></i></a>
+            <a href="#" aria-label="Twitter"><i data-lucide="x"></i></a>
+            <a href="#" aria-label="Instagram"><i data-lucide="camera"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer.copyright">2024 MP3. Tout dwa rezève.</p>
+        <p data-i18n="footer.made_with">Fè ak pasyon pou Ayiti</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+/* ========================================
+   MP3 - CSS Variables
+   Mouvman Pèp pou Pwosperite ak Pwogrè
+   ======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap');
+
+:root {
+  /* Core Colors */
+  --clr-bg: #FFFFFF;
+  --clr-bg-soft: #FAFAF8;
+  --clr-bg-dark: #0A0A0A;
+  --clr-black: #0A0A0A;
+  --clr-anthracite: #5A5A5A;
+  --clr-gold: #C9A000;
+  --clr-gold-light: #F5C518;
+  --clr-red: #CC0000;
+  --clr-accent: #C9A000;
+  
+  /* Text Colors */
+  --clr-text: #0A0A0A;
+  --clr-text-secondary: #5A5A5A;
+  --clr-text-muted: #9A9A9A;
+  --clr-text-inverse: #FFFFFF;
+  --clr-white: #FFFFFF;
+  
+  /* Borders & Accents */
+  --clr-border: #E8E4DC;
+  --clr-glass: rgba(255, 255, 255, 0.72);
+  --clr-gold-glass: rgba(201, 160, 0, 0.15);
+  
+  /* Status Colors */
+  --clr-success: #10B981;
+  --clr-warning: #F59E0B;
+  --clr-error: #CC0000;
+  
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  
+  /* Font Sizes */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-gold: 0 4px 24px rgba(201, 160, 0, 0.18);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+  
+  /* Layout */
+  --container-max: 1400px;
+  --content-max: 1200px;
+  --sidebar-width: 260px;
+  --navbar-height: 72px;
+  --mobile-nav-height: 80px;
+}

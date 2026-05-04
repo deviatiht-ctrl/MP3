@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Don | Admin MP3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  <script src="../assets/js/supabase-client.js" defer></script>
+  <script src="../assets/js/i18n.js" defer></script>
+  <script src="../assets/js/auth.js" defer></script>
+  <script src="../assets/js/admin/admin.js" defer></script>
+</head>
+<body class="admin-body">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-brand">
+      <img src="../assets/MP3LOGO.png" alt="MP3" style="height:40px;width:auto;">
+      <span>Admin</span>
+    </div>
+    <nav class="admin-sidebar-nav">
+      <a href="index.html" class="admin-nav-item"><i data-lucide="layout-dashboard" style="width:18px;height:18px;"></i><span>Tablo</span></a>
+      <a href="candidats.html" class="admin-nav-item"><i data-lucide="users" style="width:18px;height:18px;"></i><span>Kandida</span></a>
+      <a href="actualites.html" class="admin-nav-item"><i data-lucide="newspaper" style="width:18px;height:18px;"></i><span>Nouvèl</span></a>
+      <a href="agenda.html" class="admin-nav-item"><i data-lucide="calendar" style="width:18px;height:18px;"></i><span>Ajanda</span></a>
+      <a href="membres.html" class="admin-nav-item"><i data-lucide="user-check" style="width:18px;height:18px;"></i><span>Manm</span></a>
+      <a href="dons.html" class="admin-nav-item active" data-page="dons">
+        <i data-lucide="heart" style="width:18px;height:18px;"></i>
+        <span>Don</span>
+      </a>
+      <a href="../pages/admin/stats.html" class="admin-nav-item" data-page="stats">
+        <i data-lucide="bar-chart-3" style="width:18px;height:18px;"></i>
+        <span>Statistik</span>
+      </a>
+      <a href="parametres.html" class="admin-nav-item" data-page="parametres">
+        <i data-lucide="settings" style="width:18px;height:18px;"></i>
+        <span>Anviwònman</span>
+      </a>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <button class="admin-logout-btn" onclick="Auth.signOut()"><i data-lucide="log-out" style="width:16px;height:16px;"></i><span>Dekonekte</span></button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-header">
+      <div class="admin-header-title"><h1>Don</h1><p>Swivi ak jere tout don MP3 yo</p></div>
+      <div class="admin-header-actions">
+        <div class="admin-table-search"><input type="text" placeholder="Chèche..."></div>
+        <button class="admin-add-btn btn btn-primary btn-sm" style="display:none;"><i data-lucide="plus" style="width:16px;height:16px;"></i> Ajoute</button>
+        <button class="btn btn-ghost btn-sm" onclick="Admin.exportCSV()"><i data-lucide="download" style="width:16px;height:16px;"></i> Ekspòte CSV</button>
+        <a href="../index.html" class="btn btn-ghost btn-sm">Retounen</a>
+      </div>
+    </header>
+    <div class="admin-content">
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead><tr><th>—</th><th>Non Donè</th><th>Kòz</th><th>Montan</th><th>Estati</th><th>Aksyon</th></tr></thead>
+          <tbody><tr><td colspan="6" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div class="admin-modal-overlay"></div>
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <h2 class="admin-modal-title">Detay Don</h2>
+      <button class="admin-modal-close">&times;</button>
+    </div>
+    <div class="admin-modal-body">
+      <form class="admin-form">
+        <div class="admin-form-grid">
+          <div class="admin-form-group"><label>Non Donè</label><input type="text" name="donor_name" readonly style="background:var(--clr-bg-soft);"></div>
+          <div class="admin-form-group"><label>Imèl</label><input type="email" name="donor_email" readonly style="background:var(--clr-bg-soft);"></div>
+          <div class="admin-form-group"><label>Montan</label><input type="number" name="amount" readonly style="background:var(--clr-bg-soft);"></div>
+          <div class="admin-form-group"><label>Monè</label><input type="text" name="currency" readonly style="background:var(--clr-bg-soft);"></div>
+          <div class="admin-form-group"><label>Kòz</label><input type="text" name="cause" readonly style="background:var(--clr-bg-soft);"></div>
+          <div class="admin-form-group"><label>Metòd Pèman</label><input type="text" name="payment_method" readonly style="background:var(--clr-bg-soft);"></div>
+          <div class="admin-form-group"><label>Estati</label>
+            <select name="status">
+              <option value="pending">An Atant</option>
+              <option value="confirmed">Konfime</option>
+              <option value="failed">Echwe</option>
+              <option value="refunded">Ranbouse</option>
+            </select>
+          </div>
+          <div class="admin-form-group full-width"><label>Mesaj Donè</label><textarea name="message" readonly rows="3" style="background:var(--clr-bg-soft);"></textarea></div>
+        </div>
+        <div class="admin-form-actions">
+          <button type="button" class="btn btn-ghost admin-modal-cancel">Anile</button>
+          <button type="submit" class="btn btn-primary">Mete Ajou Estati</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+      Admin.init('donations');
+    });
+  </script>
+</body>
+</html>

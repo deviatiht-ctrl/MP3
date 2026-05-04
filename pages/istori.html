@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Istwa | MP3</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/navbar.css">
+  <link rel="stylesheet" href="../assets/css/mobile-nav.css">
+  <link rel="stylesheet" href="../assets/css/istori.css">
+  
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  
+  <script src="../assets/js/supabase-client.js" defer></script>
+  <script src="../assets/js/i18n.js" defer></script>
+  <script src="../assets/js/auth.js" defer></script>
+  <script src="../assets/js/navbar.js" defer></script>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="navbar-content">
+      <a href="../index.html" class="navbar-brand">
+        <img src="../assets/MP3LOGO.png" alt="MP3" class="navbar-logo">
+        <span class="navbar-party-name">Mouvman Pèp pou Pwosperite ak Pwogrè</span>
+      </a>
+      <div class="navbar-links">
+        <a href="../index.html" class="navbar-link" data-i18n="nav.home">Akèy</a>
+        <a href="istori.html" class="navbar-link active">Istwa</a>
+        <a href="candidats.html" class="navbar-link">Kandida</a>
+        <a href="agenda.html" class="navbar-link">Ajanda</a>
+        <a href="actualites.html" class="navbar-link">Aktualite</a>
+        <a href="don.html" class="navbar-link navbar-link-accent">Don</a>
+      </div>
+      <div class="navbar-actions">
+        <div class="navbar-lang">
+          <button class="navbar-lang-btn" data-lang="ht">HT</button>
+          <button class="navbar-lang-btn" data-lang="fr">FR</button>
+          <button class="navbar-lang-btn" data-lang="en">EN</button>
+          <button class="navbar-lang-btn" data-lang="es">ES</button>
+        </div>
+        <button class="navbar-btn btn-secondary" onclick="window.location.href='devenir-membre.html'" data-i18n="nav.member">Manm</button>
+        <button class="navbar-icon-btn" id="authBtn" title="Konekte">
+          <i data-lucide="user"></i>
+        </button>
+        <button class="navbar-icon-btn navbar-admin-btn" id="adminBtn" title="Admin" style="display:none;">
+          <i data-lucide="settings"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-content">
+    <a href="../index.html" class="mobile-nav-item" data-page="home">
+      <i data-lucide="home"></i>
+      <span>Akèy</span>
+    </a>
+    <a href="candidats.html" class="mobile-nav-item" data-page="candidates">
+      <i data-lucide="users"></i>
+      <span>Kandida</span>
+    </a>
+    <a href="don.html" class="mobile-nav-item mobile-nav-donate" data-page="don">
+      <i data-lucide="heart"></i>
+      <span>Don</span>
+    </a>
+    <a href="agenda.html" class="mobile-nav-item" data-page="agenda">
+      <i data-lucide="calendar"></i>
+      <span>Ajanda</span>
+    </a>
+    <a href="devenir-membre.html" class="mobile-nav-item" data-page="member">
+      <i data-lucide="user-plus"></i>
+      <span>Manm</span>
+    </a>
+  </div>
+  </nav>
+
+  <main class="page-content">
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h1 class="page-title" data-i18n="history.title">Istwa MP3</h1>
+        <p class="page-subtitle" data-i18n="history.subtitle">Yon vizyon pou yon Ayiti pi bon</p>
+      </div>
+
+      <div class="history-content">
+        <section class="history-section">
+          <h2 data-i18n="history.foundation">Fondasyon</h2>
+          <p data-i18n="history.foundation_desc">Mouvman Pèp pou Pwosperite ak Pwogrè (MP3) te fonde nan lane 2024 pa yon gwoup sitwayen ki angaje pou chanje sistèm politik Ayiti a. Pati a fèt pou reponn ak bezwen pèp la pou yon lòt jan pou fè politik, ki baze sou valè transparans, responsabilite, ak devlopman kominotè.</p>
+        </section>
+
+        <section class="history-section">
+          <h2 data-i18n="history.vision">Vizyon Nou</h2>
+          <p data-i18n="history.vision_desc">Nou vizyon yon Ayiti kote tout sitwayen gen aksè nan edikasyon, sante, ak opòtinite ekonomik. Yon peyi kote gouvènman an responsab devan pèp la, kote resous nasyonal yo jere ak efikasite pou benefis tout moun.</p>
+        </section>
+
+        <section class="history-section">
+          <h2 data-i18n="history.pillars">Twa Pilye Nou Yo</h2>
+          <div class="pillars-grid">
+            <div class="pillar-card">
+              <h3 data-i18n="mission.community">Kominote</h3>
+              <p data-i18n="history.community_desc">Nou kwè nan fòs kominote nou yo. Chak kominote gen potansyal pou devlope lokalman epi kontribiye nan pwogrè nasyonal la.</p>
+            </div>
+            <div class="pillar-card">
+              <h3 data-i18n="mission.equity">Ekite</h3>
+              <p data-i18n="history.equity_desc">Nou angaje nou pou redwi inegalite sosyal ak ekonomik, epi asire ke tout sitwayen gen menm chans pou reyisi.</p>
+            </div>
+            <div class="pillar-card">
+              <h3 data-i18n="mission.efficiency">Efisyans</h3>
+              <p data-i18n="history.efficiency_desc">Nou pwomèt pou jere byen resous peyi a, elimine gaspiyaj, ak garanti ke chak goud depanse rapote rezilta reyel pou pèp la.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="history-section">
+          <h2 data-i18n="history.commitments">Angajman Nou</h2>
+          <ul class="commitment-list">
+            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> Travay ak transparans ak entegrite</li>
+            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> Tande epi reponn bezwen pèp la</li>
+            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> Konstwi yon ekonomi ki kreye travay</li>
+            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> Asire sekirite ak stabilite pou tout moun</li>
+            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> Pwoteje anviwònman an pou jenerasyon k ap vini yo</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="../assets/MP3LOGO.png" alt="MP3" class="footer-logo">
+        <span class="footer-party-name">Mouvman Pèp pou Pwosperite ak Pwogrè</span>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Lyen Rapide</h4>
+          <ul>
+            <li><a href="istori.html">Istwa</a></li>
+            <li><a href="candidats.html">Kandida</a></li>
+            <li><a href="actualites.html">Aktualite</a></li>
+            <li><a href="agenda.html">Ajanda</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Kontak</h4>
+          <ul>
+            <li>contact@mp3-ayiti.ht</li>
+            <li>+509 00 00 00 00</li>
+            <li>Delmas, Pòtoprens</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Rezo Sosyal</h4>
+          <div class="footer-social">
+            <a href="#"><i data-lucide="share-2"></i></a>
+            <a href="#"><i data-lucide="x"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>2024 MP3. Tout dwa rezève.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>

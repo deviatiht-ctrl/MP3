@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "home": "Home",
+    "history": "History",
+    "candidates": "Candidates",
+    "agenda": "Agenda",
+    "news": "News",
+    "donate": "Donate",
+    "member": "Member"
+  },
+  "hero": {
+    "eyebrow": "MP3 — People's Movement for Prosperity and Progress",
+    "headline": "We cut anger, We change",
+    "devise": "COMMUNITY · EQUITY · EFFICIENCY",
+    "cta_member": "Become a Member",
+    "cta_donate": "Make a Donation",
+    "stats_members": "Active Members",
+    "stats_departments": "Departments",
+    "stats_goal": "Goal: Change Haiti"
+  },
+  "mission": {
+    "title": "Our Mission",
+    "community": "Community",
+    "community_desc": "We believe in the strength of our communities. We work together to build a more just society.",
+    "equity": "Equity",
+    "equity_desc": "We fight for a system where everyone has equal opportunities to succeed.",
+    "efficiency": "Efficiency",
+    "efficiency_desc": "We are committed to managing the country's resources well with transparency."
+  },
+  "candidates": {
+    "title": "Our Candidates",
+    "view_all": "View All Candidates",
+    "see_more": "See More",
+    "position_president": "Presidential Candidate",
+    "position_senator": "Senate Candidate",
+    "position_deputy": "Deputy Candidate",
+    "position_mayor": "Mayoral Candidate"
+  },
+  "news": {
+    "title": "Recent News",
+    "view_all": "All News",
+    "read_more": "Read More",
+    "category_campaign": "Campaign",
+    "category_economy": "Economy",
+    "category_region": "Region"
+  },
+  "agenda": {
+    "title": "Upcoming Events",
+    "register": "Register",
+    "upcoming": "Upcoming",
+    "past": "Past"
+  },
+  "donation": {
+    "title": "Help us change Haiti. Every donation makes a difference.",
+    "choose_cause": "Choose Cause",
+    "choose_amount": "Choose Amount",
+    "payment_method": "Payment Method",
+    "donor_info": "Donor Information",
+    "confirm": "Confirmation",
+    "secure": "Secure Payment",
+    "total_raised": "Total Raised",
+    "recent_donations": "Recent Donations",
+    "why_donate": "Why Your Donation Matters"
+  },
+  "membership": {
+    "title": "Become an MP3 Member",
+    "conditions_title": "Membership Conditions",
+    "condition_1": "I declare that I am not a member of any other political party",
+    "condition_2": "I commit to defending the values and interests of MP3",
+    "condition_3": "I accept the party's statutes and internal regulations",
+    "condition_4": "I enjoy all my civil rights",
+    "register_now": "Register Now",
+    "download_form": "Download Form"
+  },
+  "footer": {
+    "quick_links": "Quick Links",
+    "contact": "Contact",
+    "social": "Social Media",
+    "copyright": "© 2024 MP3. All rights reserved.",
+    "made_with": "Made with passion for Haiti"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "remember": "Remember me",
+    "forgot_password": "Forgot password?",
+    "no_account": "No account?",
+    "create_account": "Create account",
+    "welcome": "Welcome to MP3"
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "candidates": "Candidates",
+    "news": "News",
+    "agenda": "Agenda",
+    "members": "Members",
+    "donations": "Donations",
+    "settings": "Settings",
+    "add_new": "Add New",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "export": "Export CSV"
+  }
+}

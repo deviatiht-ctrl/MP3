@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | MP3</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+  
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  
+  <script src="../assets/js/supabase-client.js" defer></script>
+  <script src="../assets/js/i18n.js" defer></script>
+  <script src="../assets/js/auth.js" defer></script>
+  <script src="../assets/js/admin/dashboard.js" defer></script>
+</head>
+<body class="admin-body">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-brand">
+      <img src="../assets/MP3LOGO.png" alt="MP3" style="height:40px;width:auto;">
+      <span>Admin</span>
+    </div>
+    <nav class="admin-sidebar-nav">
+      <a href="index.html" class="admin-nav-item active" data-page="dashboard">
+        <i data-lucide="layout-dashboard" style="width: 18px; height: 18px;"></i>
+        <span>Tablo</span>
+      </a>
+      <a href="candidats.html" class="admin-nav-item" data-page="candidats">
+        <i data-lucide="users" style="width: 18px; height: 18px;"></i>
+        <span>Kandida</span>
+      </a>
+      <a href="actualites.html" class="admin-nav-item" data-page="actualites">
+        <i data-lucide="newspaper" style="width: 18px; height: 18px;"></i>
+        <span>Nouvèl</span>
+      </a>
+      <a href="agenda.html" class="admin-nav-item" data-page="agenda">
+        <i data-lucide="calendar" style="width: 18px; height: 18px;"></i>
+        <span>Ajanda</span>
+      </a>
+      <a href="membres.html" class="admin-nav-item" data-page="membres">
+        <i data-lucide="user-check" style="width: 18px; height: 18px;"></i>
+        <span>Manm</span>
+      </a>
+      <a href="dons.html" class="admin-nav-item" data-page="dons">
+        <i data-lucide="heart" style="width: 18px; height: 18px;"></i>
+        <span>Don</span>
+      </a>
+      <a href="../pages/admin/stats.html" class="admin-nav-item" data-page="stats">
+        <i data-lucide="bar-chart-3" style="width: 18px; height: 18px;"></i>
+        <span>Statistik</span>
+      </a>
+      <a href="parametres.html" class="admin-nav-item" data-page="parametres">
+        <i data-lucide="settings" style="width: 18px; height: 18px;"></i>
+        <span>Anviwònman</span>
+      </a>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <button class="admin-logout-btn" onclick="Auth.signOut()">
+        <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+        <span>Dekonekte</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-header">
+      <div class="admin-header-title">
+        <h1>Tablo</h1>
+        <p>Vue d'ensemble de l'activité MP3</p>
+      </div>
+      <div class="admin-header-actions">
+        <a href="../index.html" class="btn btn-ghost btn-sm">Retounen sou Sit</a>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div class="admin-stats">
+        <div class="admin-stat-card stat-members">
+          <div class="admin-stat-icon" style="background: rgba(201,160,0,0.1); color: var(--clr-accent);">
+            <i data-lucide="users" style="width: 20px; height: 20px;"></i>
+          </div>
+          <div class="admin-stat-info">
+            <span class="admin-stat-value">0</span>
+            <span class="admin-stat-label">Manm Aktif</span>
+          </div>
+        </div>
+        <div class="admin-stat-card stat-donations">
+          <div class="admin-stat-icon" style="background: rgba(10,10,10,0.1); color: var(--clr-anthracite);">
+            <i data-lucide="banknote" style="width: 20px; height: 20px;"></i>
+          </div>
+          <div class="admin-stat-info">
+            <span class="admin-stat-value">HTG 0</span>
+            <span class="admin-stat-label">Total Don</span>
+          </div>
+        </div>
+        <div class="admin-stat-card stat-events">
+          <div class="admin-stat-icon" style="background: rgba(245,197,24,0.1); color: var(--clr-gold);">
+            <i data-lucide="calendar" style="width: 20px; height: 20px;"></i>
+          </div>
+          <div class="admin-stat-info">
+            <span class="admin-stat-value">0</span>
+            <span class="admin-stat-label">Evènman</span>
+          </div>
+        </div>
+        <div class="admin-stat-card stat-news">
+          <div class="admin-stat-icon" style="background: rgba(204,0,0,0.1); color: var(--clr-red);">
+            <i data-lucide="newspaper" style="width: 20px; height: 20px;"></i>
+          </div>
+          <div class="admin-stat-info">
+            <span class="admin-stat-value">0</span>
+            <span class="admin-stat-label">Nouvèl Pibliye</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-charts">
+        <div class="admin-chart-card">
+          <h3>Don pa Mwa</h3>
+          <div class="admin-chart-container">
+            <canvas id="donationsChart"></canvas>
+          </div>
+        </div>
+        <div class="admin-chart-card">
+          <h3>Manm pa Depatman</h3>
+          <div class="admin-chart-container">
+            <canvas id="membersChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-activity">
+        <h3>Aktivite Resan</h3>
+        <div class="admin-activity-feed"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

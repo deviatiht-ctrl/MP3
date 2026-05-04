@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kandida | MP3</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/navbar.css">
+  <link rel="stylesheet" href="../assets/css/mobile-nav.css">
+  <link rel="stylesheet" href="../assets/css/candidats.css">
+  
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  
+  <script src="../assets/js/supabase-client.js" defer></script>
+  <script src="../assets/js/i18n.js" defer></script>
+  <script src="../assets/js/auth.js" defer></script>
+  <script src="../assets/js/navbar.js" defer></script>
+  <script src="../assets/js/candidats.js" defer></script>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="navbar-content">
+      <a href="../index.html" class="navbar-brand">
+        <img src="../assets/MP3LOGO.png" alt="MP3" class="navbar-logo">
+        <span class="navbar-party-name">Mouvman Pèp pou Pwosperite ak Pwogrè</span>
+      </a>
+      <div class="navbar-links">
+        <a href="../index.html" class="navbar-link" data-i18n="nav.home">Akèy</a>
+        <a href="istori.html" class="navbar-link">Istwa</a>
+        <a href="candidats.html" class="navbar-link active">Kandida</a>
+        <a href="agenda.html" class="navbar-link">Ajanda</a>
+        <a href="actualites.html" class="navbar-link">Aktualite</a>
+        <a href="don.html" class="navbar-link navbar-link-accent">Don</a>
+      </div>
+      <div class="navbar-actions">
+        <div class="navbar-lang">
+          <button class="navbar-lang-btn" data-lang="ht">HT</button>
+          <button class="navbar-lang-btn" data-lang="fr">FR</button>
+          <button class="navbar-lang-btn" data-lang="en">EN</button>
+          <button class="navbar-lang-btn" data-lang="es">ES</button>
+        </div>
+        <button class="navbar-btn btn-secondary" onclick="window.location.href='devenir-membre.html'" data-i18n="nav.member">Manm</button>
+        <button class="navbar-icon-btn" id="authBtn" title="Konekte">
+          <i data-lucide="user"></i>
+        </button>
+        <button class="navbar-icon-btn navbar-admin-btn" id="adminBtn" title="Admin" style="display:none;">
+          <i data-lucide="settings"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-content">
+    <a href="../index.html" class="mobile-nav-item" data-page="home">
+      <i data-lucide="home"></i>
+      <span>Akèy</span>
+    </a>
+    <a href="candidats.html" class="mobile-nav-item active" data-page="candidates">
+      <i data-lucide="users"></i>
+      <span>Kandida</span>
+    </a>
+    <a href="don.html" class="mobile-nav-item mobile-nav-donate" data-page="don">
+      <i data-lucide="heart"></i>
+      <span>Don</span>
+    </a>
+    <a href="agenda.html" class="mobile-nav-item" data-page="agenda">
+      <i data-lucide="calendar"></i>
+      <span>Ajanda</span>
+    </a>
+    <a href="devenir-membre.html" class="mobile-nav-item" data-page="member">
+      <i data-lucide="user-plus"></i>
+      <span>Manm</span>
+    </a>
+  </div>
+  </nav>
+
+  <main class="page-content">
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h1 class="page-title" data-i18n="candidates.title">Nou Kandida Yo</h1>
+        <p class="page-subtitle" data-i18n="candidates.subtitle">Ekip nou an — dedye a chanje Ayiti</p>
+      </div>
+
+      <div class="filter-bar">
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all" data-i18n="filters.all">Tout</button>
+          <button class="filter-tab" data-filter="prezidan" data-i18n="filters.president">Prezidan</button>
+          <button class="filter-tab" data-filter="senatè" data-i18n="filters.senator">Senatè</button>
+          <button class="filter-tab" data-filter="depite" data-i18n="filters.deputy">Depite</button>
+          <button class="filter-tab" data-filter="majistra" data-i18n="filters.mayor">Majistra</button>
+        </div>
+        <div class="filter-search">
+          <i data-lucide="search" style="width: 18px; height: 18px;"></i>
+          <input type="text" placeholder="Chèche kandida..." data-i18n-placeholder="filters.search_placeholder">
+        </div>
+      </div>
+
+      <div class="candidats-grid-full"></div>
+    </div>
+  </main>
+
+  <div class="candidat-panel-overlay"></div>
+  <div class="candidat-panel">
+    <div class="candidat-panel-header">
+      <button class="candidat-panel-close"><i data-lucide="x" style="width: 20px; height: 20px;"></i></button>
+    </div>
+    <div class="candidat-panel-content">
+      <div class="candidat-panel-image">
+        <img src="" alt="">
+      </div>
+      <span class="candidat-panel-position"></span>
+      <h2 class="candidat-panel-name"></h2>
+      <div class="candidat-panel-dept">
+        <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i>
+      </div>
+      <p class="candidat-panel-bio"></p>
+      <h4 data-i18n="candidate.accomplishments">Ryalizasyon</h4>
+      <ul class="candidat-accomplishments"></ul>
+      <div class="candidat-panel-actions">
+        <button class="btn btn-primary btn-block" data-i18n="candidate.support">Soutni Kandida a</button>
+        <div class="candidat-social"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="../assets/MP3LOGO.png" alt="MP3" class="footer-logo">
+        <span class="footer-party-name">Mouvman Pèp pou Pwosperite ak Pwogrè</span>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Lyen Rapide</h4>
+          <ul>
+            <li><a href="istori.html">Istwa</a></li>
+            <li><a href="candidats.html">Kandida</a></li>
+            <li><a href="actualites.html">Aktualite</a></li>
+            <li><a href="agenda.html">Ajanda</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Kontak</h4>
+          <ul>
+            <li>contact@mp3-ayiti.ht</li>
+            <li>+509 00 00 00 00</li>
+            <li>Delmas, Pòtoprens</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Rezo Sosyal</h4>
+          <div class="footer-social">
+            <a href="#"><i data-lucide="share-2"></i></a>
+            <a href="#"><i data-lucide="x"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>2024 MP3. Tout dwa rezève.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
