@@ -66,3 +66,26 @@ CREATE POLICY "donations_admin" ON mp3_donations FOR UPDATE USING (is_mp3_admin(
 -- Causes: public read active, admin all
 CREATE POLICY "causes_public" ON mp3_causes FOR SELECT USING (is_active = true OR is_mp3_admin());
 CREATE POLICY "causes_admin" ON mp3_causes FOR ALL USING (is_mp3_admin());
+
+-- =============================================
+-- GRANTS: Allow anon + authenticated roles to
+-- perform operations permitted by RLS policies
+-- =============================================
+
+-- Public tables: anon can read
+GRANT SELECT ON mp3_settings   TO anon, authenticated;
+GRANT SELECT ON mp3_candidats  TO anon, authenticated;
+GRANT SELECT ON mp3_actualites TO anon, authenticated;
+GRANT SELECT ON mp3_agenda     TO anon, authenticated;
+GRANT SELECT ON mp3_causes     TO anon, authenticated;
+
+-- Members: anon can INSERT (membership request), authenticated can SELECT/UPDATE own row
+GRANT INSERT        ON mp3_members TO anon, authenticated;
+GRANT SELECT, UPDATE ON mp3_members TO authenticated;
+
+-- Donations: anyone can donate
+GRANT INSERT ON mp3_donations TO anon, authenticated;
+GRANT SELECT ON mp3_donations TO authenticated;
+
+-- RSVPs: authenticated only
+GRANT INSERT, SELECT ON mp3_rsvps TO authenticated;

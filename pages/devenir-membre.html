@@ -434,8 +434,20 @@
         const email = formData.get('email');
         const name  = formData.get('full_name');
 
-        // Step 1: Save member record
-        const { data: memberData, error: memberError } = await db.from('mp3_members').insert({
+        // Step 1: Create auth account first so user is authenticated for subsequent queries
+        const { data: authData, error: authError } = await db.auth.signUp({
+          email,
+          password: pwd,
+          options: { data: { full_name: name } }
+        });
+
+        if (authError) {
+          // Rate limit or duplicate — still save the member record without user_id
+          console.warn('Auth signup warning:', authError.message);
+        }
+
+        // Step 2: Save member record (no .select() — avoids RLS SELECT block on anon)
+        const { error: memberError } = await db.from('mp3_members').insert({
           full_name:     name,
           date_of_birth: formData.get('date_of_birth'),
           nin:           formData.get('nin'),
@@ -444,23 +456,11 @@
           department:    formData.get('department'),
           commune:       formData.get('commune'),
           address:       formData.get('address'),
-          status:        'pending'
-        }).select('id').single();
-
-        if (memberError) throw memberError;
-
-        // Step 2: Create auth account with chosen password
-        const { data: authData, error: authError } = await db.auth.signUp({
-          email,
-          password: pwd,
-          options: { data: { full_name: name } }
+          status:        'pending',
+          user_id:       authData?.user?.id ?? null
         });
 
-        if (authError) {
-          console.warn('Auth signup warning:', authError.message);
-        } else if (authData?.user) {
-          await db.from('mp3_members').update({ user_id: authData.user.id }).eq('id', memberData.id);
-        }
+        if (memberError) throw memberError;
 
         // Show success then final done
         showPanel('ovlSuccess');
