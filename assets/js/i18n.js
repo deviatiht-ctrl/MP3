@@ -144,7 +144,7 @@ const I18n = {
    * Setup language switcher buttons
    */
   setupLanguageSwitchers() {
-    document.querySelectorAll('.lang-btn, .navbar-lang-btn').forEach(btn => {
+    document.querySelectorAll('.lang-btn, .navbar-lang-btn, .mobile-header-lang-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         const lang = btn.getAttribute('data-lang');
@@ -157,7 +157,7 @@ const I18n = {
    * Update language switcher UI
    */
   updateLanguageSwitchers() {
-    document.querySelectorAll('.lang-btn, .navbar-lang-btn').forEach(btn => {
+    document.querySelectorAll('.lang-btn, .navbar-lang-btn, .mobile-header-lang-btn').forEach(btn => {
       const lang = btn.getAttribute('data-lang');
       btn.classList.toggle('active', lang === this.currentLang);
     });

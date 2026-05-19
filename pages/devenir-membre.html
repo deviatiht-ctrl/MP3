@@ -22,6 +22,46 @@
   <script src="../assets/js/i18n.js" defer></script>
   <script src="../assets/js/auth.js" defer></script>
   <script src="../assets/js/site-stats.js" defer></script>
+  <style>
+    .mp3-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s ease}
+    .mp3-overlay.visible{opacity:1;pointer-events:all}
+    .mp3-overlay-card{background:#fff;border-radius:28px;padding:52px 44px;max-width:420px;width:90%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,.22);transform:scale(.88) translateY(20px);transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+    .mp3-overlay.visible .mp3-overlay-card{transform:scale(1) translateY(0)}
+    .overlay-spinner{width:72px;height:72px;border-radius:50%;border:5px solid #e8e8e8;border-top-color:#4f46e5;animation:spin .8s linear infinite;margin:0 auto 28px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .overlay-check-wrap{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#12c26b,#0ea959);margin:0 auto 28px;display:flex;align-items:center;justify-content:center;transform:scale(0);animation:popIn .45s cubic-bezier(.34,1.56,.64,1) forwards}
+    @keyframes popIn{0%{transform:scale(0)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+    .overlay-check-wrap svg{width:40px;height:40px}
+    .overlay-check-wrap svg path{stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none;stroke-dasharray:50;stroke-dashoffset:50;animation:drawCheck .4s ease .3s forwards}
+    @keyframes drawCheck{to{stroke-dashoffset:0}}
+    .overlay-title{font-size:1.35rem;font-weight:700;color:#111;margin-bottom:8px}
+    .overlay-sub{color:#666;font-size:.93rem;line-height:1.55;margin-bottom:0}
+    .overlay-pwd-icon{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#7c3aed);margin:0 auto 24px;display:flex;align-items:center;justify-content:center}
+    .overlay-pwd-icon svg{width:34px;height:34px;color:#fff}
+    .overlay-pwd-form{margin-top:24px;text-align:left}
+    .overlay-pwd-group{margin-bottom:16px}
+    .overlay-pwd-group label{display:block;font-size:.82rem;font-weight:600;color:#444;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+    .overlay-pwd-input-wrap{position:relative}
+    .overlay-pwd-input{width:100%;padding:13px 44px 13px 16px;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;outline:none;transition:border-color .2s;box-sizing:border-box;font-family:inherit}
+    .overlay-pwd-input:focus{border-color:#4f46e5}
+    .overlay-pwd-eye{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#999;padding:0;display:flex;align-items:center}
+    .overlay-pwd-eye svg{width:18px;height:18px}
+    .pwd-strength{margin-top:6px;display:flex;gap:4px}
+    .pwd-strength-bar{height:4px;flex:1;border-radius:4px;background:#e2e8f0;transition:background .3s}
+    .pwd-strength-bar.weak{background:#f87171}
+    .pwd-strength-bar.medium{background:#fb923c}
+    .pwd-strength-bar.strong{background:#34d399}
+    .pwd-hint{font-size:.78rem;color:#888;margin-top:5px;display:block}
+    .overlay-pwd-btn{width:100%;padding:14px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px;transition:opacity .2s,transform .15s;font-family:inherit}
+    .overlay-pwd-btn:hover{opacity:.92;transform:translateY(-1px)}
+    .overlay-pwd-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    .overlay-skip{display:block;margin-top:14px;color:#999;font-size:.85rem;text-decoration:none;cursor:pointer}
+    .overlay-skip:hover{color:#555}
+    .ovl-panel{display:none}
+    .ovl-panel.active{display:block}
+    .overlay-error{color:#ef4444;font-size:.82rem;margin-top:5px;display:none}
+    .overlay-error.show{display:block}
+  </style>
 </head>
 <body style="display: flex; flex-direction: column; min-height: 100vh;">
   <nav class="navbar" id="navbar">
@@ -55,6 +95,21 @@
       </div>
     </div>
   </nav>
+
+  <!-- Mobile Top Header -->
+  <header class="mobile-header" id="mobileHeader">
+    <div class="mobile-header-content">
+      <a href="../index.html" class="mobile-header-brand">
+        <img src="../assets/MP3LOGO.png" alt="MP3" class="mobile-header-logo">
+      </a>
+      <div class="mobile-header-lang">
+        <button class="mobile-header-lang-btn" data-lang="ht">HT</button>
+        <button class="mobile-header-lang-btn" data-lang="fr">FR</button>
+        <button class="mobile-header-lang-btn" data-lang="en">EN</button>
+        <button class="mobile-header-lang-btn" data-lang="es">ES</button>
+      </div>
+    </div>
+  </header>
 
   <nav class="mobile-nav" id="mobileNav">
   <div class="mobile-nav-content">
@@ -145,6 +200,37 @@
           </div>
 
           <div class="form-section">
+            <h3>Kreye Modpas</h3>
+            <div class="form-grid">
+              <div class="form-group" style="position:relative;">
+                <label class="form-label">Modpas *</label>
+                <div style="position:relative;">
+                  <input type="password" name="password" id="regPwd" class="form-input" placeholder="Min. 8 karaktè" required autocomplete="new-password" style="padding-right:44px;">
+                  <button type="button" onclick="toggleRegPwd('regPwd',this)" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#999;padding:0;display:flex;align-items:center;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+                <div style="display:flex;gap:4px;margin-top:6px;">
+                  <div style="height:4px;flex:1;border-radius:4px;background:#e2e8f0;transition:background .3s;" id="rbar1"></div>
+                  <div style="height:4px;flex:1;border-radius:4px;background:#e2e8f0;transition:background .3s;" id="rbar2"></div>
+                  <div style="height:4px;flex:1;border-radius:4px;background:#e2e8f0;transition:background .3s;" id="rbar3"></div>
+                </div>
+                <span style="font-size:.78rem;color:#888;margin-top:4px;display:block;" id="rPwdHint">Itilize lèt, chif, ak senbòl</span>
+              </div>
+              <div class="form-group" style="position:relative;">
+                <label class="form-label">Konfime Modpas *</label>
+                <div style="position:relative;">
+                  <input type="password" name="password_confirm" id="regPwdConfirm" class="form-input" placeholder="Repete modpas la" required autocomplete="new-password" style="padding-right:44px;">
+                  <button type="button" onclick="toggleRegPwd('regPwdConfirm',this)" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#999;padding:0;display:flex;align-items:center;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+                <span style="font-size:.82rem;color:#ef4444;margin-top:4px;display:none;" id="rPwdError">Modpas yo pa menm — eseye ankò</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
             <h3 data-i18n="membership.commitments_title">Angajman</h3>
             <div class="form-checkbox-group">
               <label class="form-checkbox">
@@ -207,6 +293,38 @@
     </div>
   </main>
 
+  <!-- ===== OVERLAY ===== -->
+  <div class="mp3-overlay" id="mp3Overlay">
+    <div class="mp3-overlay-card">
+
+      <!-- Panel 1: Loading -->
+      <div class="ovl-panel active" id="ovlLoading">
+        <div class="overlay-spinner"></div>
+        <p class="overlay-title">Anrejistreman...</p>
+        <p class="overlay-sub">Tanpri pran pasyans, n ap anrejistre enfòmasyon ou yo.</p>
+      </div>
+
+      <!-- Panel 2: Data saved success -->
+      <div class="ovl-panel" id="ovlSuccess">
+        <div class="overlay-check-wrap">
+          <svg viewBox="0 0 50 50"><path d="M12 26 L22 36 L38 18"/></svg>
+        </div>
+        <p class="overlay-title">Demann Anrejistre!</p>
+        <p class="overlay-sub">Enfòmasyon ou yo sove avèk siksè.<br>Kounye a kreye modpas ou pou ka konekte.</p>
+      </div>
+
+      <!-- Panel 3: Final success -->
+      <div class="ovl-panel" id="ovlDone">
+        <div class="overlay-check-wrap">
+          <svg viewBox="0 0 50 50"><path d="M12 26 L22 36 L38 18"/></svg>
+        </div>
+        <p class="overlay-title">Tout bon! 🎉</p>
+        <p class="overlay-sub">Kont ou kreye avèk siksè.<br>Admin nan pral valide demann ou a. N ap kontakte ou.</p>
+      </div>
+
+    </div>
+  </div>
+
   <footer class="footer" style="margin-top: 0;">
     <div class="footer-container">
       <div class="footer-brand">
@@ -248,56 +366,114 @@
   <script src="../assets/js/navbar.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-      }
+      if (typeof lucide !== 'undefined') lucide.createIcons();
     });
 
+    /* ---- Overlay helpers ---- */
+    function showOverlay() { document.getElementById('mp3Overlay').classList.add('visible'); }
+    function hideOverlay() { document.getElementById('mp3Overlay').classList.remove('visible'); }
+    function showPanel(id) {
+      document.querySelectorAll('.ovl-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    /* ---- Toggle password visibility (form) ---- */
+    function toggleRegPwd(inputId, btn) {
+      const inp = document.getElementById(inputId);
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+      btn.style.color = inp.type === 'text' ? '#4f46e5' : '#999';
+    }
+
+    /* ---- Password strength (form) ---- */
+    document.getElementById('regPwd').addEventListener('input', function() {
+      const val = this.value;
+      const bars = ['rbar1','rbar2','rbar3'].map(id => document.getElementById(id));
+      bars.forEach(b => b.style.background = '#e2e8f0');
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val) && /[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+      const colors = ['#f87171','#fb923c','#34d399'];
+      const labels = ['Fèb — ajoute chif ak senbòl','Mwayen — bon kanmenm!','Solid — ekselan!'];
+      for (let i = 0; i < score; i++) bars[i].style.background = colors[score - 1];
+      document.getElementById('rPwdHint').textContent = score > 0 ? labels[score-1] : 'Itilize lèt, chif, ak senbòl';
+    });
+
+    /* ---- Registration form submit ---- */
     document.getElementById('memberForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(e.target);
-      
+      const submitBtn = e.target.querySelector('[type="submit"]');
+
+      // Client-side password validation
+      const pwd     = formData.get('password');
+      const pwdConf = formData.get('password_confirm');
+      const errEl   = document.getElementById('rPwdError');
+      errEl.style.display = 'none';
+
+      if (pwd.length < 8) {
+        errEl.textContent = 'Modpas la dwe gen omwen 8 karaktè';
+        errEl.style.display = 'block';
+        document.getElementById('regPwd').focus();
+        return;
+      }
+      if (pwd !== pwdConf) {
+        errEl.textContent = 'Modpas yo pa menm — eseye ankò';
+        errEl.style.display = 'block';
+        document.getElementById('regPwdConfirm').focus();
+        return;
+      }
+
+      showOverlay();
+      showPanel('ovlLoading');
+
       try {
         const db = await waitForSupabase();
-        if (!db) {
-          alert('Erè koneksyon. Tanpri eseye ankò.');
-          return;
-        }
+        if (!db) throw new Error('Koneksyon Supabase pa disponib');
 
-        // Create auth account first
-        const { data: authData, error: authError } = await db.auth.signUp({
-          email: formData.get('email'),
-          password: Math.random().toString(36).slice(-12),
-          options: {
-            data: {
-              full_name: formData.get('full_name')
-            }
-          }
-        });
+        const email = formData.get('email');
+        const name  = formData.get('full_name');
 
-        if (authError) throw authError;
-
-        // Create member record
-        const { error: memberError } = await db.from('mp3_members').insert({
-          user_id: authData.user.id,
-          full_name: formData.get('full_name'),
+        // Step 1: Save member record
+        const { data: memberData, error: memberError } = await db.from('mp3_members').insert({
+          full_name:     name,
           date_of_birth: formData.get('date_of_birth'),
-          nin: formData.get('nin'),
-          email: formData.get('email'),
-          phone: formData.get('phone'),
-          department: formData.get('department'),
-          commune: formData.get('commune'),
-          address: formData.get('address'),
-          status: 'pending'
-        });
+          nin:           formData.get('nin'),
+          email:         email,
+          phone:         formData.get('phone'),
+          department:    formData.get('department'),
+          commune:       formData.get('commune'),
+          address:       formData.get('address'),
+          status:        'pending'
+        }).select('id').single();
 
         if (memberError) throw memberError;
 
-        alert('Demann ou anrejistre avèk siksè! Nou pral kontakte ou byen vit.');
-        window.location.href = '../index.html';
+        // Step 2: Create auth account with chosen password
+        const { data: authData, error: authError } = await db.auth.signUp({
+          email,
+          password: pwd,
+          options: { data: { full_name: name } }
+        });
+
+        if (authError) {
+          console.warn('Auth signup warning:', authError.message);
+        } else if (authData?.user) {
+          await db.from('mp3_members').update({ user_id: authData.user.id }).eq('id', memberData.id);
+        }
+
+        // Show success then final done
+        showPanel('ovlSuccess');
+        setTimeout(() => {
+          showPanel('ovlDone');
+          setTimeout(() => { window.location.href = 'login.html'; }, 3000);
+        }, 2200);
+
       } catch (error) {
         console.error('Registration error:', error);
-        alert('Erè pandan enskripsyon. Tanpri eseye ankò.');
+        hideOverlay();
+        if (submitBtn) submitBtn.disabled = false;
+        alert('Erè pandan enskripsyon: ' + error.message);
       }
     });
   </script>

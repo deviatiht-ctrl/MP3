@@ -212,6 +212,36 @@ const Admin = {
   },
 
   /**
+   * Upload file to Supabase storage
+   */
+  async uploadFile(file, bucketName) {
+    try {
+      const db = await waitForSupabase();
+      if (!db) throw new Error('Supabase not available');
+
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+      const filePath = `${bucketName}/${fileName}`;
+
+      const { data, error } = await db.storage
+        .from(bucketName)
+        .upload(filePath, file);
+
+      if (error) throw error;
+
+      // Get public URL
+      const { data: { publicUrl } } = db.storage
+        .from(bucketName)
+        .getPublicUrl(filePath);
+
+      return publicUrl;
+    } catch (error) {
+      console.error('Upload error:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Save item (create or update)
    */
   async saveItem() {
@@ -220,19 +250,62 @@ const Admin = {
 
     const formData = new FormData(form);
     const data = {};
+    const files = {};
 
+    // Separate files from regular form data
     formData.forEach((value, key) => {
       const input = form.querySelector(`[name="${key}"]`);
-      if (input?.type === 'checkbox') {
+      if (input?.type === 'file' && input.files[0]) {
+        files[key] = input.files[0];
+      } else if (input?.type === 'checkbox') {
         data[key] = input.checked;
       } else if (input?.type === 'number') {
         data[key] = parseFloat(value) || null;
-      } else {
+      } else if (input?.type !== 'file') {
         data[key] = value || null;
       }
     });
 
     try {
+      // Upload files if any
+      if (Object.keys(files).length > 0) {
+        const db = await waitForSupabase();
+        if (!db) {
+          alert('Supabase pa disponib. Pa ka upload fichye.');
+          return;
+        }
+
+        // Determine bucket name based on entity
+        const bucketMap = {
+          candidats: 'candidate-photos',
+          actualites: 'news-images',
+          agenda: 'event-images'
+        };
+        const bucketName = bucketMap[this.currentEntity];
+
+        if (!bucketName) {
+          alert('Bucket sa pa konfigire pou upload.');
+          return;
+        }
+
+        // Upload each file
+        for (const [fileKey, file] of Object.entries(files)) {
+          try {
+            const publicUrl = await this.uploadFile(file, bucketName);
+            // Map file input name to database field name
+            const fieldMap = {
+              photo_file: 'photo_url',
+              cover_image_file: 'cover_image_url'
+            };
+            const fieldName = fieldMap[fileKey] || fileKey;
+            data[fieldName] = publicUrl;
+          } catch (error) {
+            alert(`Erè pandan upload ${fileKey}: ${error.message}`);
+            return;
+          }
+        }
+      }
+
       const db = await waitForSupabase();
       if (!db) return;
 

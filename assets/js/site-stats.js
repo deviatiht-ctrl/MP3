@@ -25,24 +25,24 @@ const SiteStats = {
         this.setEmptyStats();
         return;
       }
-      
+
       const { data, error } = await db
         .from('site_stats')
         .select('*');
-        
+
       if (error) {
         console.error('Error fetching stats:', error);
         this.setEmptyStats();
         return;
       }
-      
+
       // If no data returned, show zeros
       if (!data || data.length === 0) {
         console.log('No stats data found, showing zeros');
         this.setEmptyStats();
         return;
       }
-      
+
       // Convert array to object with stat_key as key
       data.forEach(stat => {
         this.stats[stat.stat_key] = {
@@ -50,7 +50,7 @@ const SiteStats = {
           label: this.getLocalizedLabel(stat)
         };
       });
-      
+
     } catch (error) {
       console.error('Error in fetchStats:', error);
       this.setEmptyStats();
@@ -126,7 +126,7 @@ const SiteStats = {
       memberStat.textContent = this.formatNumber(target);
       memberStat.setAttribute('data-target', target);
     }
-    
+
     // Departments
     const deptStat = document.querySelectorAll('.hero-stat-number[data-target]')[1];
     if (deptStat && this.stats.departments) {
