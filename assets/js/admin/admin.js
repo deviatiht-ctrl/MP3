@@ -94,7 +94,7 @@ const Admin = {
       members: {
         photo: item.photo_url,
         title: item.full_name,
-        subtitle: item.member_code,
+        subtitle: item.member_code || item.email,
         badge: item.department,
         status: item.status
       },
@@ -120,6 +120,14 @@ const Admin = {
         <td><span class="status-badge ${config.status}">${config.status}</span></td>
         <td>
           <div class="admin-table-actions">
+            ${this.currentEntity === 'members' && item.status === 'pending' ? `
+              <button class="admin-table-btn" style="color:#22c55e;" onclick="Admin.updateMemberStatus('${item.id}','active')" title="Aksepte">
+                <i data-lucide="check" style="width:16px;height:16px;"></i>
+              </button>
+              <button class="admin-table-btn" style="color:#ef4444;" onclick="Admin.updateMemberStatus('${item.id}','rejected')" title="Refize">
+                <i data-lucide="x" style="width:16px;height:16px;"></i>
+              </button>
+            ` : ''}
             <button class="admin-table-btn" onclick="Admin.editItem('${item.id}')" title="Modifye">
               <i data-lucide="pencil" style="width: 16px; height: 16px;"></i>
             </button>
@@ -311,12 +319,15 @@ const Admin = {
 
       let result;
       if (this.editingId) {
-        result = await db.from(`mp3_${this.currentEntity}`).update(data).eq('id', this.editingId);
+        result = await db.from(`mp3_${this.currentEntity}`).update(data).eq('id', this.editingId).select();
+        if (result.error) throw result.error;
+        if (!result.data || result.data.length === 0) {
+          throw new Error('Okenn chanjman pa fèt. Vérifye dwa aksè ou nan Supabase.');
+        }
       } else {
         result = await db.from(`mp3_${this.currentEntity}`).insert(data);
+        if (result.error) throw result.error;
       }
-
-      if (result.error) throw result.error;
 
       this.closeModal();
       await this.loadData();
@@ -324,6 +335,33 @@ const Admin = {
     } catch (error) {
       console.error('Save error:', error);
       alert('Erè pandan anrejistreman. Tanpri eseye ankò.');
+    }
+  },
+
+  /**
+   * Quick status update for members (Accept / Reject buttons in table row)
+   */
+  async updateMemberStatus(id, status) {
+    const label = status === 'active' ? 'aksepte' : 'refize';
+    if (!confirm(`Èske ou vle ${label} manm sa a?`)) return;
+
+    try {
+      const db = await waitForSupabase();
+      if (!db) return;
+
+      const { data, error } = await db
+        .from('mp3_members')
+        .update({ status })
+        .eq('id', id)
+        .select();
+
+      if (error) throw error;
+      if (!data || data.length === 0) throw new Error('Chanjman pa aplike — vérifye policy Supabase.');
+
+      await this.loadData();
+    } catch (error) {
+      console.error('Status update error:', error);
+      alert('Erè: ' + error.message);
     }
   },
 
