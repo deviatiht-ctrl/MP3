@@ -1,71 +1,60 @@
 /**
  * MP3 - Email Service
- * Uses EmailJS for client-side email delivery.
- *
- * SETUP (required once):
- * 1. Go to https://emailjs.com and create a free account
- * 2. Add an Email Service (Gmail, Outlook, etc.)
- * 3. Create a template with variables: {{to_email}}, {{to_name}}, {{subject}}, {{html_content}}
- *    - Set "Reply To" = {{reply_to}}
- *    - In the template body, add: {{{html_content}}} (triple braces for raw HTML)
- * 4. Replace the three config values below with your IDs
+ * Uses Brevo (formerly Sendinblue) Transactional Email API.
+ * No external library needed — pure fetch.
  */
 
 const EmailService = {
 
   // ─── Configuration ────────────────────────────────────────────────────────
   config: {
-    serviceId:  'YOUR_EMAILJS_SERVICE_ID',   // e.g. 'service_abc123'
-    templateId: 'YOUR_EMAILJS_TEMPLATE_ID',  // e.g. 'template_xyz789'
-    publicKey:  'YOUR_EMAILJS_PUBLIC_KEY',   // e.g. 'user_AbCdEfGhIjKlMn'
-    fromName:   'MP3 — Mouvman Pèp pou Pwosperite ak Pwogrè',
-    replyTo:    'contact@mp3.ht'
+    apiKey:   window.MP3_BREVO_KEY || '',
+    endpoint: 'https://api.brevo.com/v3/smtp/email',
+    sender: {
+      name:  'MP3 — Mouvman Pèp pou Pwosperite ak Pwogrè',
+      email: 'contact@mp3.ht'   // ← must be verified in your Brevo account
+    },
+    replyTo: { email: 'contact@mp3.ht' }
   },
 
-  _ready: false,
+  _ready: true,
 
   // ─── Init ──────────────────────────────────────────────────────────────────
   init() {
-    if (typeof emailjs === 'undefined') {
-      console.warn('[EmailService] EmailJS library not loaded.');
-      return;
-    }
-    if (this.config.publicKey === 'YOUR_EMAILJS_PUBLIC_KEY') {
-      console.warn('[EmailService] EmailJS not configured. Set config values in email-service.js');
-      return;
-    }
-    emailjs.init(this.config.publicKey);
-    this._ready = true;
-    console.log('[EmailService] Ready.');
+    console.log('[EmailService] Brevo ready.');
   },
 
   // ─── Core send ────────────────────────────────────────────────────────────
   async send(to_email, to_name, subject, html_content) {
-    if (!this._ready) {
-      console.warn('[EmailService] Not ready — email not sent to', to_email);
-      return { success: false, error: 'EmailJS not configured' };
-    }
-
     try {
-      const params = {
-        to_email,
-        to_name:      to_name || '',
+      const body = {
+        sender:      this.config.sender,
+        to:          [{ email: to_email, name: to_name || '' }],
+        replyTo:     this.config.replyTo,
         subject,
-        html_content,
-        from_name:    this.config.fromName,
-        reply_to:     this.config.replyTo,
+        htmlContent: html_content
       };
 
-      const result = await emailjs.send(
-        this.config.serviceId,
-        this.config.templateId,
-        params
-      );
+      const res = await fetch(this.config.endpoint, {
+        method:  'POST',
+        headers: {
+          'accept':       'application/json',
+          'api-key':      this.config.apiKey,
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || `HTTP ${res.status}`);
+      }
+
       console.log(`[EmailService] Sent to ${to_email} ✓`);
-      return { success: true, result };
+      return { success: true };
     } catch (error) {
       console.error(`[EmailService] Failed to send to ${to_email}:`, error);
-      return { success: false, error };
+      return { success: false, error: error.message };
     }
   },
 
