@@ -12,13 +12,19 @@
   <link rel="stylesheet" href="../assets/css/admin.css">
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
   <script src="../assets/js/supabase-client.js" defer></script>
   <script src="../assets/js/i18n.js" defer></script>
   <script src="../assets/js/auth.js" defer></script>
+  <script src="../assets/js/email-templates.js" defer></script>
+  <script src="../assets/js/email-service.js" defer></script>
   <script src="../assets/js/admin/admin.js" defer></script>
 </head>
 <body class="admin-body">
-  <aside class="admin-sidebar">
+  <!-- Mobile overlay -->
+  <div class="admin-sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+  <aside class="admin-sidebar" id="adminSidebar">
     <div class="admin-sidebar-brand">
       <img src="../assets/MP3LOGO.png" alt="MP3" style="height:40px;width:auto;">
       <span>Admin</span>
@@ -49,12 +55,18 @@
 
   <main class="admin-main">
     <header class="admin-header">
-      <div class="admin-header-title"><h1>Manm</h1><p>Jere demann adezyon ak manm yo</p></div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="admin-mobile-toggle" onclick="openSidebar()" title="Meni">
+          <i data-lucide="menu" style="width:20px;height:20px;"></i>
+        </button>
+        <div class="admin-header-title"><h1>Manm</h1><p class="admin-header-sub">Jere demann adezyon ak manm yo</p></div>
+      </div>
       <div class="admin-header-actions">
-        <div class="admin-table-search"><input type="text" placeholder="Chèche..."></div>
-        <button class="admin-add-btn btn btn-primary btn-sm" style="display:none;"><i data-lucide="plus" style="width:16px;height:16px;"></i> Ajoute</button>
-        <button class="btn btn-ghost btn-sm" onclick="Admin.exportCSV()"><i data-lucide="download" style="width:16px;height:16px;"></i> Ekspòte CSV</button>
-        <a href="../index.html" class="btn btn-ghost btn-sm">Retounen</a>
+        <div class="admin-table-search"><i data-lucide="search" style="width:15px;height:15px;color:#999;"></i><input type="text" placeholder="Chèche..."></div>
+        <button class="btn btn-ghost btn-sm" onclick="openBroadcastModal()" title="Voye imel a tout manm aktif">
+          <i data-lucide="mail" style="width:15px;height:15px;"></i><span class="btn-label"> Difize</span>
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="Admin.exportCSV()"><i data-lucide="download" style="width:15px;height:15px;"></i><span class="btn-label"> Ekspòte</span></button>
       </div>
     </header>
     <div class="admin-content">
@@ -67,6 +79,7 @@
     </div>
   </main>
 
+  <!-- ── Edit Member Modal ── -->
   <div class="admin-modal-overlay"></div>
   <div class="admin-modal">
     <div class="admin-modal-header">
@@ -99,11 +112,245 @@
     </div>
   </div>
 
+  <!-- ── Email Composer Modal ── -->
+  <div class="admin-modal-overlay" id="emailOverlay" onclick="closeEmailModal()"></div>
+  <div class="admin-modal" id="emailModal" style="max-width:640px;">
+    <div class="admin-modal-header" style="background:linear-gradient(135deg,#0a0a0a,#1a1a2e);">
+      <h2 class="admin-modal-title" style="color:#fff;display:flex;align-items:center;gap:10px;">
+        <i data-lucide="mail" style="width:20px;height:20px;color:#c9a000;"></i>
+        <span id="emailModalTitle">Voye Imel</span>
+      </h2>
+      <button class="admin-modal-close" onclick="closeEmailModal()" style="color:#fff;">&times;</button>
+    </div>
+    <div class="admin-modal-body">
+      <!-- Recipient info -->
+      <div id="emailRecipientInfo" style="background:#f8f9ff;border:1px solid #e0e7ff;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#4338ca;display:none;">
+        <i data-lucide="user" style="width:14px;height:14px;display:inline;"></i>
+        <strong id="emailRecipientName"></strong> — <span id="emailRecipientAddr"></span>
+      </div>
+
+      <!-- Template selector -->
+      <div class="admin-form-group" style="margin-bottom:16px;">
+        <label>Chèche Modèl</label>
+        <select id="emailTemplateSelect" onchange="applyEmailTemplate()">
+          <option value="">— Chwazi yon modèl —</option>
+          <option value="welcome">🎉 Byenveni Manm (Nouvo)</option>
+          <option value="approved">✅ Kont Aksepte</option>
+          <option value="rejected">❌ Demann Refize</option>
+          <option value="custom">✏️ Imel Pèsonèl</option>
+        </select>
+      </div>
+
+      <!-- Subject -->
+      <div class="admin-form-group" style="margin-bottom:16px;">
+        <label>Sijè</label>
+        <input type="text" id="emailSubject" class="admin-form-group input" placeholder="Sijè imel la..." style="padding:10px 14px;border:1.5px solid var(--clr-border);border-radius:8px;font-size:14px;width:100%;box-sizing:border-box;">
+      </div>
+
+      <!-- Message -->
+      <div class="admin-form-group" style="margin-bottom:8px;">
+        <label>Mesaj <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#aaa;">(HTML aksepte)</span></label>
+        <textarea id="emailBody" rows="7" placeholder="Ekri mesaj ou la..." style="padding:12px 14px;border:1.5px solid var(--clr-border);border-radius:8px;font-size:14px;width:100%;box-sizing:border-box;resize:vertical;font-family:inherit;line-height:1.6;"></textarea>
+      </div>
+      <p style="font-size:11px;color:#aaa;margin:0 0 20px;">Tip: ou ka itilize <code>&lt;b&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;a href="..."&gt;</code> nan mesaj la.</p>
+
+      <!-- Reject reason (only for rejected template) -->
+      <div id="rejectReasonGroup" style="display:none;margin-bottom:16px;">
+        <div class="admin-form-group">
+          <label>Rezon Refi (opsyonèl)</label>
+          <input type="text" id="rejectReason" placeholder="Eksplike rezon an..." style="padding:10px 14px;border:1.5px solid var(--clr-border);border-radius:8px;font-size:14px;width:100%;box-sizing:border-box;">
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:flex-end;padding-top:16px;border-top:1px solid var(--clr-border);">
+        <button type="button" class="btn btn-ghost" onclick="closeEmailModal()">Anile</button>
+        <button type="button" class="btn btn-primary" id="emailSendBtn" onclick="sendEmailFromModal()" style="background:linear-gradient(135deg,#c9a000,#e6c200);color:#0a0a0a;border:none;">
+          <i data-lucide="send" style="width:15px;height:15px;"></i> Voye Imel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Broadcast Modal ── -->
+  <div class="admin-modal-overlay" id="broadcastOverlay" onclick="closeBroadcastModal()"></div>
+  <div class="admin-modal" id="broadcastModal" style="max-width:600px;">
+    <div class="admin-modal-header" style="background:linear-gradient(135deg,#0a0a0a,#1a1a2e);">
+      <h2 class="admin-modal-title" style="color:#fff;display:flex;align-items:center;gap:10px;">
+        <i data-lucide="send" style="width:20px;height:20px;color:#c9a000;"></i>
+        Difize — Tout Manm Aktif
+      </h2>
+      <button class="admin-modal-close" onclick="closeBroadcastModal()" style="color:#fff;">&times;</button>
+    </div>
+    <div class="admin-modal-body">
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#92400e;">
+        ⚠️ Imel sa ap voye bay <strong>tout manm aktif yo</strong>. Sèlman itilize sa pou mesaj enpòtan.
+      </div>
+      <div class="admin-form-group" style="margin-bottom:16px;">
+        <label>Sijè</label>
+        <input type="text" id="broadcastSubject" placeholder="Sijè imel la..." style="padding:10px 14px;border:1.5px solid var(--clr-border);border-radius:8px;font-size:14px;width:100%;box-sizing:border-box;">
+      </div>
+      <div class="admin-form-group" style="margin-bottom:20px;">
+        <label>Mesaj</label>
+        <textarea id="broadcastBody" rows="6" placeholder="Ekri mesaj ou la..." style="padding:12px 14px;border:1.5px solid var(--clr-border);border-radius:8px;font-size:14px;width:100%;box-sizing:border-box;resize:vertical;font-family:inherit;line-height:1.6;"></textarea>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;padding-top:16px;border-top:1px solid var(--clr-border);">
+        <button type="button" class="btn btn-ghost" onclick="closeBroadcastModal()">Anile</button>
+        <button type="button" class="btn btn-primary" id="broadcastSendBtn" onclick="sendBroadcast()" style="background:linear-gradient(135deg,#c9a000,#e6c200);color:#0a0a0a;border:none;">
+          <i data-lucide="send" style="width:15px;height:15px;"></i> Voye Bay Tout Manm
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // ── current member being emailed ──
+    let _emailTarget = null;
+
     document.addEventListener('DOMContentLoaded', () => {
       if (typeof lucide !== 'undefined') lucide.createIcons();
       Admin.init('members');
     });
+
+    // ── Sidebar mobile ──
+    function openSidebar()  {
+      document.getElementById('adminSidebar').classList.add('open');
+      document.getElementById('sidebarOverlay').classList.add('active');
+    }
+    function closeSidebar() {
+      document.getElementById('adminSidebar').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('active');
+    }
+
+    // ── Open email composer for a specific member ──
+    function openEmailModal(memberId) {
+      _emailTarget = Admin.currentData.find(m => m.id === memberId);
+      if (!_emailTarget) return;
+
+      document.getElementById('emailModalTitle').textContent = 'Voye Imel';
+      document.getElementById('emailRecipientName').textContent = _emailTarget.full_name;
+      document.getElementById('emailRecipientAddr').textContent = _emailTarget.email;
+      document.getElementById('emailRecipientInfo').style.display = 'block';
+      document.getElementById('emailTemplateSelect').value = '';
+      document.getElementById('emailSubject').value = '';
+      document.getElementById('emailBody').value = '';
+      document.getElementById('rejectReasonGroup').style.display = 'none';
+
+      document.getElementById('emailModal').classList.add('active');
+      document.getElementById('emailOverlay').classList.add('active');
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function closeEmailModal() {
+      document.getElementById('emailModal').classList.remove('active');
+      document.getElementById('emailOverlay').classList.remove('active');
+      _emailTarget = null;
+    }
+
+    // ── Apply chosen template ──
+    function applyEmailTemplate() {
+      const tpl  = document.getElementById('emailTemplateSelect').value;
+      const subj = document.getElementById('emailSubject');
+      const body = document.getElementById('emailBody');
+      const rej  = document.getElementById('rejectReasonGroup');
+      rej.style.display = 'none';
+
+      if (!tpl || !_emailTarget) return;
+
+      const m = _emailTarget;
+
+      if (tpl === 'welcome') {
+        const t = EmailTemplates.memberWelcome(m);
+        subj.value = t.subject;
+        body.value = `Bonjou ${m.full_name},\n\nNou resevwa demann adezyon ou avèk siksè. Ekip nou an ap revize dosye ou epi n ap kontakte ou trè vit.\n\nMèsi pou konfyans ou!`;
+      } else if (tpl === 'approved') {
+        const t = EmailTemplates.memberApproved(m);
+        subj.value = t.subject;
+        body.value = `Bonjou ${m.full_name},\n\nFelisitasyon! Kont manm MP3 ou aksepte. Ou ka kounye a konekte nan sit nou an.\n\nBienveni ofisyèlman nan fanmi MP3!`;
+      } else if (tpl === 'rejected') {
+        const t = EmailTemplates.memberRejected(m);
+        subj.value = t.subject;
+        body.value = `Bonjou ${m.full_name},\n\nAprè revizyon dosye ou, nou regrèt pou enfòme ou ke demann adezyon ou pa ka aksepte pou kounye a.\n\nOu ka kontakte nou pou plis enfòmasyon.`;
+        rej.style.display = 'block';
+      } else if (tpl === 'custom') {
+        subj.value = '';
+        body.value = `Bonjou ${m.full_name},\n\n`;
+      }
+    }
+
+    // ── Send from modal ──
+    async function sendEmailFromModal() {
+      const to    = _emailTarget;
+      const tpl   = document.getElementById('emailTemplateSelect').value;
+      const subj  = document.getElementById('emailSubject').value.trim();
+      const body  = document.getElementById('emailBody').value.trim();
+      const btn   = document.getElementById('emailSendBtn');
+
+      if (!subj || !body) { alert('Tanpri ranpli sijè ak mesaj la.'); return; }
+      if (!to?.email)     { alert('Manm sa pa gen imèl.'); return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Ap voye...';
+
+      let result;
+      if (tpl === 'approved') {
+        result = await EmailService.sendMemberApproved(to);
+      } else if (tpl === 'rejected') {
+        const reason = document.getElementById('rejectReason').value;
+        result = await EmailService.sendMemberRejected(to, reason);
+      } else if (tpl === 'welcome') {
+        result = await EmailService.sendMemberWelcome(to);
+      } else {
+        // Custom — convert newlines to <br>
+        const html = body.replace(/\n/g, '<br>');
+        result = await EmailService.sendCustom(to.email, to.full_name, subj, html);
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = '<i data-lucide="send" style="width:15px;height:15px;"></i> Voye Imel';
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      if (result?.success) {
+        alert(`✅ Imel voye bay ${to.email} avèk siksè!`);
+        closeEmailModal();
+      } else {
+        alert('❌ Erè pandan voye imel: ' + (result?.error?.text || result?.error || 'Vérifye konfigirasyon EmailJS.'));
+      }
+    }
+
+    // ── Broadcast modal ──
+    function openBroadcastModal() {
+      document.getElementById('broadcastModal').classList.add('active');
+      document.getElementById('broadcastOverlay').classList.add('active');
+    }
+    function closeBroadcastModal() {
+      document.getElementById('broadcastModal').classList.remove('active');
+      document.getElementById('broadcastOverlay').classList.remove('active');
+    }
+
+    async function sendBroadcast() {
+      const subj = document.getElementById('broadcastSubject').value.trim();
+      const body = document.getElementById('broadcastBody').value.trim();
+      const btn  = document.getElementById('broadcastSendBtn');
+
+      if (!subj || !body) { alert('Tanpri ranpli sijè ak mesaj la.'); return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Ap voye...';
+
+      const html = body.replace(/\n/g, '<br>');
+      const result = await EmailService.broadcastToMembers(subj, html);
+
+      btn.disabled = false;
+      btn.innerHTML = '<i data-lucide="send" style="width:15px;height:15px;"></i> Voye Bay Tout Manm';
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      if (result?.success) {
+        alert(`✅ Imel voye bay ${result.sent} manm avèk siksè!`);
+        closeBroadcastModal();
+      } else {
+        alert('❌ Erè: ' + (result?.error || 'Vérifye konfigirasyon EmailJS.'));
+      }
+    }
   </script>
 </body>
 </html>

@@ -120,6 +120,11 @@ const Admin = {
         <td><span class="status-badge ${config.status}">${config.status}</span></td>
         <td>
           <div class="admin-table-actions">
+            ${this.currentEntity === 'members' ? `
+              <button class="admin-table-btn" style="color:#4f46e5;" onclick="openEmailModal('${item.id}')" title="Voye Imel">
+                <i data-lucide="mail" style="width:16px;height:16px;"></i>
+              </button>
+            ` : ''}
             ${this.currentEntity === 'members' && item.status === 'pending' ? `
               <button class="admin-table-btn" style="color:#22c55e;" onclick="Admin.updateMemberStatus('${item.id}','active')" title="Aksepte">
                 <i data-lucide="check" style="width:16px;height:16px;"></i>

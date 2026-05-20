@@ -669,12 +669,104 @@
   color: var(--clr-black);
 }
 
-/* Responsive */
+/* ── Admin body layout ── */
+.admin-body {
+  display: flex;
+  min-height: 100vh;
+  background: var(--clr-bg-soft);
+}
+
+/* ── Sidebar brand strip ── */
+.admin-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--clr-gold);
+}
+
+/* ── Sidebar nav ── */
+.admin-sidebar-nav {
+  flex: 1;
+  padding: 12px 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ── Logout button ── */
+.admin-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  border-radius: var(--radius-md);
+  transition: all 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.admin-logout-btn:hover {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+}
+
+/* ── Header subtitle ── */
+.admin-header-title h1 {
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 700;
+  color: var(--clr-black);
+  margin: 0 0 2px;
+}
+.admin-header-sub {
+  font-size: 13px;
+  color: var(--clr-text-muted);
+  margin: 0;
+}
+
+/* ── Mobile toggle (hidden on desktop) ── */
+.admin-mobile-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: var(--clr-bg);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  color: var(--clr-black);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── Sidebar overlay (mobile) ── */
+.admin-sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1999;
+}
+.admin-sidebar-overlay.active {
+  display: block;
+}
+
+/* ── btn-label: hide on very small screens ── */
+.btn-label { display: inline; }
+
+/* ── Responsive ── */
 @media (max-width: 1200px) {
   .admin-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
   .admin-charts-grid {
     grid-template-columns: 1fr;
   }
@@ -684,58 +776,88 @@
   .admin-sidebar {
     transform: translateX(-100%);
     transition: transform 0.3s ease;
+    z-index: 2000;
   }
-  
   .admin-sidebar.open {
     transform: translateX(0);
   }
-  
   .admin-main {
     margin-left: 0;
+    padding: var(--space-5);
   }
-  
   .admin-mobile-toggle {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: var(--clr-bg);
-    border: 1px solid var(--clr-border);
-    border-radius: var(--radius-md);
-    color: var(--clr-black);
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-header {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+  .admin-header-actions {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .admin-table-search input {
+    min-width: 120px;
+  }
+  .admin-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+  .admin-stat-value {
+    font-size: var(--text-2xl);
+  }
+  .admin-table th:nth-child(3),
+  .admin-table td:nth-child(3) {
+    display: none;
   }
 }
 
 @media (max-width: 640px) {
-  .admin-stats-grid {
-    grid-template-columns: 1fr;
+  .admin-main {
+    padding: var(--space-4) var(--space-3);
   }
-  
+  .admin-stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+  .admin-stat-card {
+    padding: var(--space-4);
+  }
   .admin-form-grid {
     grid-template-columns: 1fr;
   }
-  
-  .admin-form-grid .form-group.full-width {
+  .admin-form-grid .form-group.full-width,
+  .admin-form-grid .admin-form-group.full-width {
     grid-column: span 1;
   }
-  
-  .admin-table {
-    display: block;
+  .admin-table-wrapper {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
-  
+  .admin-table {
+    min-width: 520px;
+  }
   .admin-modal {
     width: 95%;
     max-height: 95vh;
+    top: 50%;
   }
-  
-  .admin-modal-footer {
+  .admin-form-actions {
     flex-direction: column;
   }
-  
-  .admin-modal-footer .btn {
+  .admin-form-actions .btn {
     width: 100%;
     justify-content: center;
+  }
+  .btn-label {
+    display: none;
+  }
+  .admin-header-title p {
+    display: none;
   }
 }
