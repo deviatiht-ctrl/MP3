@@ -21,10 +21,7 @@
   <script src="../assets/js/admin/admin.js" defer></script>
 </head>
 <body class="admin-body">
-  <!-- Mobile overlay -->
-  <div class="admin-sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-
-  <aside class="admin-sidebar" id="adminSidebar">
+  <aside class="admin-sidebar">
     <div class="admin-sidebar-brand">
       <img src="../assets/MP3LOGO.png" alt="MP3" style="height:40px;width:auto;">
       <span>Admin</span>
@@ -55,12 +52,7 @@
 
   <main class="admin-main">
     <header class="admin-header">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <button class="admin-mobile-toggle" onclick="openSidebar()" title="Meni">
-          <i data-lucide="menu" style="width:20px;height:20px;"></i>
-        </button>
-        <div class="admin-header-title"><h1>Manm</h1><p class="admin-header-sub">Jere demann adezyon ak manm yo</p></div>
-      </div>
+      <div class="admin-header-title"><h1>Manm</h1><p class="admin-header-sub">Jere demann adezyon ak manm yo</p></div>
       <div class="admin-header-actions">
         <div class="admin-table-search"><i data-lucide="search" style="width:15px;height:15px;color:#999;"></i><input type="text" placeholder="Chèche..."></div>
         <button class="btn btn-ghost btn-sm" onclick="openBroadcastModal()" title="Voye imel a tout manm aktif">
@@ -211,15 +203,6 @@
       Admin.init('members');
     });
 
-    // ── Sidebar mobile ──
-    function openSidebar()  {
-      document.getElementById('adminSidebar').classList.add('open');
-      document.getElementById('sidebarOverlay').classList.add('active');
-    }
-    function closeSidebar() {
-      document.getElementById('adminSidebar').classList.remove('open');
-      document.getElementById('sidebarOverlay').classList.remove('active');
-    }
 
     // ── Open email composer for a specific member ──
     function openEmailModal(memberId) {

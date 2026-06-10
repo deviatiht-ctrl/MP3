@@ -67,20 +67,23 @@ const Navbar = {
    */
   setupScrollBehavior() {
     const navbar = document.querySelector('.navbar');
+    const mobileNav = document.querySelector('.mobile-nav');
     if (!navbar) return;
 
     let lastScroll = 0;
-    
+
     window.addEventListener('scroll', () => {
       const currentScroll = window.pageYOffset;
-      
-      // Add/remove scrolled class
+
+      // Navbar scrolled state
       if (currentScroll > 50) {
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
       }
-      
+
+      // Mobile nav hide/show disabled to keep navbar fixed
+
       lastScroll = currentScroll;
     }, { passive: true });
   },
@@ -123,33 +126,33 @@ const Navbar = {
    * Update auth UI (login/profile button, admin button)
    */
   updateAuthUI(user, isAdmin) {
-    const authBtn = document.querySelector('#authBtn');
-    const adminBtn = document.querySelector('#adminBtn');
+    const authBtns = document.querySelectorAll('#authBtn, #mobileAuthBtn');
+    const adminBtns = document.querySelectorAll('#adminBtn, #mobileAdminBtn');
     const isRoot = !window.location.pathname.includes('/pages/');
     const membrePath = isRoot ? 'pages/membre.html' : 'membre.html';
     const loginPath = isRoot ? 'pages/login.html' : 'login.html';
     const adminPath = isRoot ? 'admin/index.html' : '../admin/index.html';
 
     if (user) {
-      if (authBtn) {
-        const initial = user.email.charAt(0).toUpperCase();
-        authBtn.innerHTML = `<span style="width:28px;height:28px;border-radius:50%;background:var(--clr-gold);color:var(--clr-black);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">${initial}</span>`;
-        authBtn.title = user.email;
-        authBtn.onclick = () => window.location.href = membrePath;
-      }
-      if (isAdmin && adminBtn) {
-        adminBtn.style.display = 'flex';
-        adminBtn.onclick = () => window.location.href = adminPath;
-      } else if (adminBtn) {
-        adminBtn.style.display = 'none';
-      }
+      const initial = user.email.charAt(0).toUpperCase();
+      authBtns.forEach(btn => {
+        btn.innerHTML = `<span style="width:28px;height:28px;border-radius:50%;background:var(--clr-gold);color:var(--clr-black);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">${initial}</span>`;
+        btn.title = user.email;
+        btn.onclick = () => window.location.href = membrePath;
+      });
+      adminBtns.forEach(btn => {
+        btn.style.display = 'flex';
+        btn.onclick = () => window.location.href = adminPath;
+      });
     } else {
-      if (authBtn) {
-        authBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>`;
-        authBtn.title = 'Konekte';
-        authBtn.onclick = () => window.location.href = loginPath;
-      }
-      if (adminBtn) adminBtn.style.display = 'none';
+      authBtns.forEach(btn => {
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>`;
+        btn.title = I18n.t('auth.login');
+        btn.onclick = () => window.location.href = loginPath;
+      });
+      adminBtns.forEach(btn => {
+        btn.style.display = 'none';
+      });
     }
 
     // Re-render Lucide icons

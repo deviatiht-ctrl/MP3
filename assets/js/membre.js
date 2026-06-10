@@ -15,6 +15,7 @@ const MembreDashboard = {
     await this.loadMemberData();
     this.setupNavigation();
     this.setupTabSwitching();
+    this.setupLanguageSelector();
 
     // Show default tab
     this.showTab('home');
@@ -46,12 +47,40 @@ const MembreDashboard = {
         this.renderProfileTab();
         this.loadRSVPs();
       } else {
+        // Check if user is admin
+        const isAdmin = await Auth.checkAdmin(user.email);
+        if (isAdmin) {
+          window.location.href = '../admin/index.html';
+          return;
+        }
         // Redirect to registration if not a member yet
-        window.location.href = '/pages/devenir-membre.html';
+        window.location.href = 'devenir-membre.html';
       }
     } catch (error) {
       console.error('Error loading member data:', error);
     }
+  },
+
+  setupLanguageSelector() {
+    const select = document.getElementById('languageSelect');
+    if (select) {
+      select.value = I18n.currentLang;
+      select.addEventListener('change', (e) => {
+        I18n.setLanguage(e.target.value);
+      });
+    }
+
+    window.addEventListener('languageChanged', (e) => {
+      if (select) select.value = e.detail.lang;
+      this.renderMemberCard();
+      this.renderProfileTab();
+      this.renderAgendaTab();
+      const activeItem = document.querySelector('.membre-nav-item.active');
+      if (activeItem) {
+        const tab = activeItem.getAttribute('data-tab');
+        this.showTab(tab);
+      }
+    });
   },
 
   /**
@@ -62,10 +91,10 @@ const MembreDashboard = {
     if (!card || !this.member) return;
 
     const statusLabels = {
-      pending: 'Pandan',
-      active: 'Aktif',
-      inactive: 'Inaktif',
-      rejected: 'Rejte'
+      pending: I18n.t('membre.status_labels.pending'),
+      active: I18n.t('membre.status_labels.active'),
+      inactive: I18n.t('membre.status_labels.inactive'),
+      rejected: I18n.t('membre.status_labels.rejected')
     };
 
     const statusClass = this.member.status;
@@ -87,7 +116,7 @@ const MembreDashboard = {
     const metaEl = card.querySelector('.membre-id-meta');
     if (metaEl) {
       metaEl.innerHTML = `
-        <span><i data-lucide="map-pin" style="width: 12px; height: 12px;"></i> ${this.member.department || 'Pa defini'}</span>
+        <span><i data-lucide="map-pin" style="width: 12px; height: 12px;"></i> ${this.member.department || I18n.t('agenda.location_undefined')}</span>
         <span><i data-lucide="calendar" style="width: 12px; height: 12px;"></i> ${I18n.formatDate(this.member.created_at)}</span>
       `;
     }
@@ -105,14 +134,14 @@ const MembreDashboard = {
     if (!grid) return;
 
     const fields = [
-      { label: 'Non Konplè', value: this.member.full_name },
-      { label: 'Dat Nesans', value: I18n.formatDate(this.member.date_of_birth) },
-      { label: 'NIN/CIN', value: this.member.nin || 'Pa provide' },
-      { label: 'Depatman', value: this.member.department || 'Pa defini' },
-      { label: 'Komin', value: this.member.commune || 'Pa defini' },
-      { label: 'Adrès', value: this.member.address || 'Pa defini', fullWidth: true },
-      { label: 'Telefòn', value: this.member.phone || 'Pa defini' },
-      { label: 'Imèl', value: this.member.email }
+      { label: I18n.t('membre.info_labels.full_name'), value: this.member.full_name },
+      { label: I18n.t('membre.info_labels.date_of_birth'), value: I18n.formatDate(this.member.date_of_birth) },
+      { label: I18n.t('membre.info_labels.nin'), value: this.member.nin || I18n.t('membership.select') },
+      { label: I18n.t('membre.info_labels.department'), value: this.member.department || I18n.t('agenda.location_undefined') },
+      { label: I18n.t('membre.info_labels.commune'), value: this.member.commune || I18n.t('agenda.location_undefined') },
+      { label: I18n.t('membre.info_labels.address'), value: this.member.address || I18n.t('agenda.location_undefined'), fullWidth: true },
+      { label: I18n.t('membre.info_labels.phone'), value: this.member.phone || I18n.t('agenda.location_undefined') },
+      { label: I18n.t('membre.info_labels.email'), value: this.member.email }
     ];
 
     grid.innerHTML = fields.map(f => `
@@ -159,9 +188,17 @@ const MembreDashboard = {
     if (!list) return;
 
     if (this.rsvps.length === 0) {
-      list.innerHTML = '<p class="text-muted" style="text-align: center; padding: var(--space-8);">Ou poko enskri nan okenn evènman.</p>';
+      list.innerHTML = `<p class="text-muted" style="text-align: center; padding: var(--space-8);">${I18n.t('membre.no_events_registered')}</p>`;
       return;
     }
+
+    const langLocales = {
+      ht: 'fr-FR',
+      fr: 'fr-FR',
+      en: 'en-US',
+      es: 'es-ES'
+    };
+    const currentLocale = langLocales[I18n.currentLang] || 'fr-FR';
 
     list.innerHTML = this.rsvps.map(rsvp => {
       const event = rsvp.event;
@@ -174,18 +211,18 @@ const MembreDashboard = {
         <div class="membre-agenda-item ${isPast ? 'past' : ''}">
           <div class="membre-agenda-date">
             <span class="membre-agenda-day">${date.getDate()}</span>
-            <span class="membre-agenda-month">${date.toLocaleString('fr-FR', { month: 'short' })}</span>
+            <span class="membre-agenda-month">${date.toLocaleString(currentLocale, { month: 'short' })}</span>
           </div>
           <div class="membre-agenda-info">
             <h4 class="membre-agenda-title">${event.title}</h4>
             <div class="membre-agenda-location">
               <i data-lucide="map-pin" style="width: 14px; height: 14px;"></i>
-              ${event.location || 'Kote pa defini'}
+              ${event.location || I18n.t('agenda.location_undefined')}
             </div>
           </div>
           <div class="membre-agenda-status">
             <span class="badge ${isPast ? 'badge-outline' : 'badge-gold'}">
-              ${isPast ? 'Pase' : 'Pwoche'}
+              ${isPast ? I18n.t('agenda.past') : I18n.t('agenda.upcoming')}
             </span>
           </div>
         </div>
@@ -245,11 +282,11 @@ const MembreDashboard = {
 
     // Update page title
     const titles = {
-      home: 'Akèy',
-      profile: 'Dosye Mwen',
-      agenda: 'Ajanda',
-      messages: 'Mesaj',
-      settings: 'Paramèt'
+      home: I18n.t('membre.tab_titles.home'),
+      profile: I18n.t('membre.tab_titles.profile'),
+      agenda: I18n.t('membre.tab_titles.agenda'),
+      messages: I18n.t('membre.tab_titles.messages'),
+      settings: I18n.t('membre.tab_titles.settings')
     };
 
     const titleEl = document.querySelector('.membre-page-title');
@@ -277,10 +314,10 @@ const MembreDashboard = {
 
       // Reload member data
       await this.loadMemberData();
-      alert('Enfòmasyon yo mete ajou avèk siksè!');
+      alert(I18n.t('membre.update_success'));
     } catch (error) {
       console.error('Error updating profile:', error);
-      alert('Erè pandan mete ajou. Tanpri eseye ankò.');
+      alert(I18n.t('membre.update_error'));
     }
   },
 
@@ -289,7 +326,7 @@ const MembreDashboard = {
    */
   downloadCertificate() {
     if (!this.member || this.member.status !== 'active') {
-      alert('Sètifika disponib sèlman pou manm aktif.');
+      alert(I18n.t('membre.certificate_active_only'));
       return;
     }
 

@@ -32,42 +32,42 @@
     <nav class="membre-sidebar-nav">
       <button class="membre-nav-item active" data-tab="home">
         <i data-lucide="home" style="width: 18px; height: 18px;"></i>
-        <span>Akèy</span>
+        <span data-i18n="membre.sidebar.home">Akèy</span>
       </button>
       <button class="membre-nav-item" data-tab="profile">
         <i data-lucide="user" style="width: 18px; height: 18px;"></i>
-        <span>Dosye Mwen</span>
+        <span data-i18n="membre.sidebar.profile">Dosye Mwen</span>
       </button>
       <button class="membre-nav-item" data-tab="agenda">
         <i data-lucide="calendar" style="width: 18px; height: 18px;"></i>
-        <span>Ajanda</span>
+        <span data-i18n="membre.sidebar.agenda">Ajanda</span>
       </button>
       <button class="membre-nav-item" data-tab="messages">
         <i data-lucide="mail" style="width: 18px; height: 18px;"></i>
-        <span>Mesaj</span>
+        <span data-i18n="membre.sidebar.messages">Mesaj</span>
       </button>
       <button class="membre-nav-item" data-tab="settings">
         <i data-lucide="settings" style="width: 18px; height: 18px;"></i>
-        <span>Paramèt</span>
+        <span data-i18n="membre.sidebar.settings">Paramèt</span>
       </button>
     </nav>
     <div class="membre-sidebar-footer">
       <a href="../index.html" class="membre-nav-item" style="margin-bottom: 0.5rem;">
         <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
-        <span>Tounen sou Sit la</span>
+        <span data-i18n="membre.sidebar.back_to_site">Tounen sou Sit la</span>
       </a>
       <button class="membre-logout-btn membre-sidebar-logout" onclick="Auth.signOut()">
         <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
-        <span>Dekonekte</span>
+        <span data-i18n="membre.sidebar.logout">Dekonekte</span>
       </button>
     </div>
   </aside>
 
   <main class="membre-main">
     <header class="membre-header">
-      <h1 class="membre-page-title">Akèy</h1>
+      <h1 class="membre-page-title" data-i18n="membre.tab_titles.home">Akèy</h1>
       <div class="membre-header-actions">
-        <span id="memberName">Byenveni</span>
+        <span id="memberName" data-i18n="login.welcome">Byenveni</span>
       </div>
     </header>
 
@@ -78,43 +78,43 @@
             <img src="../assets/img/logo-placeholder.svg" alt="" class="membre-id-photo">
           </div>
           <div class="membre-id-info">
-            <span class="membre-id-status pending">Chajman...</span>
+            <span class="membre-id-status pending" data-i18n="login.loading">Chajman...</span>
             <h2 class="membre-id-name">...</h2>
             <span class="membre-id-code">...</span>
             <div class="membre-id-meta"></div>
           </div>
           <button class="btn btn-sm btn-ghost membre-id-download" onclick="MembreDashboard.downloadCertificate()">
             <i data-lucide="download" style="width: 14px; height: 14px;"></i>
-            Sètifika
+            <span data-i18n="membre.certificate_btn">Sètifika</span>
           </button>
         </div>
 
         <div class="membre-quick-stats">
           <div class="membre-stat-card">
             <span class="membre-stat-value">0</span>
-            <span class="membre-stat-label">Evènman patisipe</span>
+            <span class="membre-stat-label" data-i18n="membre.stats.events_participated">Evènman patisipe</span>
           </div>
           <div class="membre-stat-card">
             <span class="membre-stat-value">0</span>
-            <span class="membre-stat-label">Don fè</span>
+            <span class="membre-stat-label" data-i18n="membre.stats.donations_made">Don fè</span>
           </div>
           <div class="membre-stat-card">
             <span class="membre-stat-value">0</span>
-            <span class="membre-stat-label">Mesaj</span>
+            <span class="membre-stat-label" data-i18n="membre.stats.messages">Mesaj</span>
           </div>
         </div>
       </div>
 
       <div class="membre-tab-content" data-tab="profile" style="display: none;">
         <div class="membre-profile-section">
-          <h3>Enfòmasyon Pèsonèl</h3>
+          <h3 data-i18n="membre.headings.personal_info">Enfòmasyon Pèsonèl</h3>
           <div class="membre-profile-grid"></div>
         </div>
       </div>
 
       <div class="membre-tab-content" data-tab="agenda" style="display: none;">
         <div class="membre-agenda-section">
-          <h3>Evènman Mwen Enskri</h3>
+          <h3 data-i18n="membre.headings.registered_events">Evènman Mwen Enskri</h3>
           <div class="membre-agenda-list"></div>
         </div>
       </div>
@@ -122,15 +122,15 @@
       <div class="membre-tab-content" data-tab="messages" style="display: none;">
         <div class="membre-messages-empty">
           <i data-lucide="inbox" style="width: 48px; height: 48px; color: var(--clr-text-muted);"></i>
-          <p>Pa gen mesaj pou kounye a.</p>
+          <p data-i18n="membre.no_messages">Pa gen mesaj pou kounye a.</p>
         </div>
       </div>
 
       <div class="membre-tab-content" data-tab="settings" style="display: none;">
         <div class="membre-settings-section">
-          <h3>Preferans</h3>
+          <h3 data-i18n="membre.headings.preferences">Preferans</h3>
           <div class="form-group">
-            <label class="form-label">Lang</label>
+            <label class="form-label" data-i18n="membre.labels.language">Lang</label>
             <select class="form-select" id="languageSelect">
               <option value="ht">Kreyòl Ayisyen</option>
               <option value="fr">Français</option>
@@ -139,12 +139,12 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Notifikasyon</label>
+            <label class="form-label" data-i18n="membre.labels.notifications">Notifikasyon</label>
             <div class="form-checkbox">
-              <label><input type="checkbox" checked> <span>Imèl evènman</span></label>
+              <label><input type="checkbox" checked> <span data-i18n="membre.labels.email_events">Imèl evènman</span></label>
             </div>
             <div class="form-checkbox">
-              <label><input type="checkbox" checked> <span>Nouvèl pati a</span></label>
+              <label><input type="checkbox" checked> <span data-i18n="membre.labels.party_news">Nouvèl pati a</span></label>
             </div>
           </div>
         </div>

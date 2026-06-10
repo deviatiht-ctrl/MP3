@@ -21,6 +21,26 @@ const ActualitesPage = {
       await this.loadArticles();
       this.setupPagination();
     }
+
+    window.addEventListener('languageChanged', () => {
+      if (slug) {
+        if (this.currentArticle) {
+          this.renderArticleDetail(this.currentArticle);
+        }
+      } else {
+        this.renderArticles();
+        this.updatePagination();
+      }
+    });
+  },
+
+  translateCategory(category) {
+    if (!category) return '';
+    const cat = category.toLowerCase();
+    if (cat === 'campagne' || cat === 'campaign' || cat === 'kanpay') return I18n.t('news.category_campaign', category);
+    if (cat === 'economy' || cat === 'économie' || cat === 'ekonomi') return I18n.t('news.category_economy', category);
+    if (cat === 'region' || cat === 'région' || cat === 'rejyon') return I18n.t('news.category_region', category);
+    return category;
   },
 
   /**
@@ -33,7 +53,7 @@ const ActualitesPage = {
     try {
       const db = await waitForSupabase();
       if (!db) {
-        grid.innerHTML = '<p class="text-center">Erè koneksyon. Tanpri eseye ankò.</p>';
+        grid.innerHTML = `<p class="text-center">${I18n.t('common.db_error')}</p>`;
         return;
       }
 
@@ -52,7 +72,7 @@ const ActualitesPage = {
       this.updatePagination();
     } catch (error) {
       console.error('Error loading articles:', error);
-      grid.innerHTML = '<p class="text-center">Erè nan chajman nouvèl yo.</p>';
+      grid.innerHTML = `<p class="text-center">${I18n.t('news.load_error')}</p>`;
     }
   },
 
@@ -64,7 +84,7 @@ const ActualitesPage = {
     if (!grid) return;
 
     if (this.articles.length === 0) {
-      grid.innerHTML = '<p class="text-center" style="grid-column: 1/-1;">Pa gen nouvèl ki disponib kounye a.</p>';
+      grid.innerHTML = `<p class="text-center" style="grid-column: 1/-1;">${I18n.t('news.no_news_now')}</p>`;
       return;
     }
 
@@ -75,7 +95,7 @@ const ActualitesPage = {
                alt="${a.title}" loading="lazy">
         </div>
         <div class="actualite-card-content">
-          <span class="actualite-category ${a.category}">${a.category}</span>
+          <span class="actualite-category ${a.category}">${this.translateCategory(a.category)}</span>
           <h3 class="actualite-title">${a.title}</h3>
           <p class="actualite-excerpt">${a.excerpt || ''}</p>
           <time class="actualite-date">${I18n.formatDate(a.published_at)}</time>
@@ -110,12 +130,13 @@ const ActualitesPage = {
       if (error) throw error;
 
       if (data) {
+        this.currentArticle = data;
         this.renderArticleDetail(data);
         // Increment views
         this.incrementViews(data.id);
       } else {
         document.querySelector('.actualite-detail-page').innerHTML = 
-          '<div class="content-wrapper" style="padding-top: 200px; text-align: center;"><h1>Atik la pa jwenn</h1></div>';
+          `<div class="content-wrapper" style="padding-top: 200px; text-align: center;"><h1>${I18n.t('news.not_found')}</h1></div>`;
       }
     } catch (error) {
       console.error('Error loading article:', error);
@@ -135,7 +156,7 @@ const ActualitesPage = {
     if (cover) cover.src = article.cover_image_url || 'assets/img/logo-placeholder.svg';
     if (title) title.textContent = article.title;
     if (category) {
-      category.textContent = article.category;
+      category.textContent = this.translateCategory(article.category);
       category.className = `actualite-category ${article.category} actualite-detail-category`;
     }
     if (meta) {
@@ -150,11 +171,11 @@ const ActualitesPage = {
         </span>
         <span>
           <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
-          ${article.views || 0} lekti
+          ${article.views || 0} ${I18n.t('news.views')}
         </span>
       `;
     }
-    if (content) content.innerHTML = article.content || '<p>Pa gen kontini disponib.</p>';
+    if (content) content.innerHTML = article.content || `<p>${I18n.t('news.content_undefined')}</p>`;
 
     // Update page title
     document.title = `${article.title} | MP3`;

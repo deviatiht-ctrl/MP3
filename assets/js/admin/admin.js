@@ -10,7 +10,8 @@ const Admin = {
 
   async init(entity) {
     this.currentEntity = entity;
-    await Auth.requireAdmin();
+    const isAllowed = await Auth.requireAdmin();
+    if (!isAllowed) return;
     await this.loadData();
     this.setupTable();
     this.setupModal();
@@ -454,7 +455,8 @@ const Admin = {
 // Settings-specific functions
 const AdminSettings = {
   async init() {
-    await Auth.requireAdmin();
+    const isAllowed = await Auth.requireAdmin();
+    if (!isAllowed) return;
     await this.loadSettings();
     this.setupTabs();
     this.setupForm();

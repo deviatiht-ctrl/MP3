@@ -38,7 +38,12 @@
     "community_desc": "Nou kwè nan fòs kominote nou yo. Chak kominote gen potansyal pou devlope lokalman epi kontribiye nan pwogrè nasyonal la.",
     "equity_desc": "Nou angaje nou pou redwi inegalite sosyal ak ekonomik, epi asire ke tout sitwayen gen menm chans pou reyisi.",
     "efficiency_desc": "Nou pwomèt pou jere byen resous peyi a, elimine gaspiyaj, ak garanti ke chak goud depanse rapote rezilta reyel pou pèp la.",
-    "commitments": "Angajman Nou"
+    "commitments": "Angajman Nou",
+    "commitment_1": "Travay ak transparans ak entegrite",
+    "commitment_2": "Tande epi reponn bezwen pèp la",
+    "commitment_3": "Konstwi yon ekonomi ki kreye travay",
+    "commitment_4": "Asire sekirite ak stabilite pou tout moun",
+    "commitment_5": "Pwoteje anviwònman an pou jenerasyon k ap vini yo"
   },
   "candidates": {
     "title": "Nou Kandida Yo",
@@ -48,7 +53,14 @@
     "position_president": "Kandida Prezidan",
     "position_senator": "Kandida Senatè",
     "position_deputy": "Kandida Depite",
-    "position_mayor": "Kandida Majistra"
+    "position_mayor": "Kandida Majistra",
+    "no_candidates": "Pa gen kandida ki disponib kounye a.",
+    "no_candidates_matching": "Pa gen kandida ki koresponn ak rechèch ou a.",
+    "load_error": "Erè nan chajman kandida yo.",
+    "full_profile": "Profil Konplè",
+    "bio_undefined": "Pa gen biyografi disponib.",
+    "accomplishments_undefined": "Pa gen reyalizasyon lisadwe.",
+    "all_haiti": "Tout Ayiti"
   },
   "filters": {
     "all": "Tout",
@@ -70,7 +82,13 @@
     "read_more": "Li Plis",
     "category_campaign": "Kanpay",
     "category_economy": "Ekonomi",
-    "category_region": "Rejyon"
+    "category_region": "Rejyon",
+    "no_news": "Pa gen nouvèl ki disponib.",
+    "no_news_now": "Pa gen nouvèl ki disponib kounye a.",
+    "load_error": "Erè nan chajman nouvèl yo.",
+    "not_found": "Atik la pa jwenn",
+    "content_undefined": "Pa gen kontini disponib.",
+    "views": "lekti"
   },
   "agenda": {
     "title": "Ajanda",
@@ -79,7 +97,20 @@
     "past": "Pase",
     "list_view": "Lis",
     "calendar_view": "Kalandriye",
-    "register": "Enskri"
+    "register": "Enskri",
+    "no_events": "Pa gen evènman",
+    "no_upcoming": "Pa gen evènman k ap vini pou kounye a.",
+    "no_past": "Pa gen evènman pase pou montre.",
+    "location_undefined": "Kote pa defini",
+    "participants": "patisipan",
+    "full": "Konplete",
+    "registration_open": "Enskripsyon ouvè",
+    "see_on_map": "Wè sou kat",
+    "register_btn": "Enskri",
+    "rsvp_success": "Enskripsyon reyisi! Nou konte wè ou nan evènman an.",
+    "rsvp_error": "Erè pandan enskripsyon. Tanpri eseye ankò.",
+    "must_login": "Ou dwe konekte pou enskri. Ale nan paj koneksyon?",
+    "already_registered": "Ou deja enskri pou evènman sa a!"
   },
   "donation": {
     "title": "Ede nou chanje Ayiti. Chak don fè diferans.",
@@ -178,5 +209,77 @@
     "save": "Anrejistre",
     "cancel": "Anile",
     "export": "Ekspòte CSV"
+  },
+  "common": {
+    "db_error": "Erè koneksyon. Tanpri eseye ankò."
+  },
+  "membre": {
+    "dashboard": "Espace Manm",
+    "no_messages": "Pa gen mesaj pou kounye a.",
+    "no_events_registered": "Ou poko enskri nan okenn evènman.",
+    "certificate_btn": "Sètifika",
+    "certificate_active_only": "Sètifika disponib sèlman pou manm aktif.",
+    "update_success": "Enfòmasyon yo mete ajou avèk siksè!",
+    "update_error": "Erè pandan mete ajou. Tanpri eseye ankò.",
+    "status_labels": {
+      "pending": "Pandan",
+      "active": "Aktif",
+      "inactive": "Inaktif",
+      "rejected": "Rejte"
+    },
+    "info_labels": {
+      "full_name": "Non Konplè",
+      "date_of_birth": "Dat Nesans",
+      "nin": "NIN/CIN",
+      "department": "Depatman",
+      "commune": "Komin",
+      "address": "Adrès",
+      "phone": "Telefòn",
+      "email": "Imèl"
+    },
+    "sidebar": {
+      "home": "Akèy",
+      "profile": "Dosye Mwen",
+      "agenda": "Ajanda",
+      "messages": "Mesaj",
+      "settings": "Paramèt",
+      "back_to_site": "Tounen sou Sit la",
+      "logout": "Dekonekte"
+    },
+    "tab_titles": {
+      "home": "Akèy",
+      "profile": "Dosye Mwen",
+      "agenda": "Ajanda",
+      "messages": "Mesaj",
+      "settings": "Paramèt"
+    },
+    "headings": {
+      "personal_info": "Enfòmasyon Pèsonèl",
+      "registered_events": "Evènman Mwen Enskri",
+      "preferences": "Preferans"
+    },
+    "stats": {
+      "events_participated": "Evènman patisipe",
+      "donations_made": "Don fè",
+      "messages": "Mesaj"
+    },
+    "labels": {
+      "language": "Lang",
+      "notifications": "Notifikasyon",
+      "email_events": "Imèl evènman",
+      "party_news": "Nouvèl pati a"
+    }
+  },
+  "login": {
+    "welcome": "Byenveni nan MP3",
+    "subtitle": "Konekte pou aksede ak espas manm ou",
+    "enter_email_first": "Antre imèl ou anvan.",
+    "email_reset_sent": "Nou voye yon imèl pou reyinisyalize modpas ou.",
+    "loading": "Chajman...",
+    "incorrect_credentials": "Imèl oswa modpas enkòrèk. Eseye ankò.",
+    "or_divider": "oubyen",
+    "back_to_home": "← Tounen sou Akèy",
+    "no_account": "Pa gen kont?",
+    "become_member": "Vin Manm MP3"
   }
 }

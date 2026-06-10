@@ -32,11 +32,11 @@
       </a>
       <div class="navbar-links">
         <a href="../index.html" class="navbar-link" data-i18n="nav.home">Akèy</a>
-        <a href="istori.html" class="navbar-link active">Istwa</a>
-        <a href="candidats.html" class="navbar-link">Kandida</a>
-        <a href="agenda.html" class="navbar-link">Ajanda</a>
-        <a href="actualites.html" class="navbar-link">Aktualite</a>
-        <a href="don.html" class="navbar-link navbar-link-accent">Don</a>
+        <a href="istori.html" class="navbar-link active" data-i18n="nav.history">Istwa</a>
+        <a href="candidats.html" class="navbar-link" data-i18n="nav.candidates">Kandida</a>
+        <a href="agenda.html" class="navbar-link" data-i18n="nav.agenda">Ajanda</a>
+        <a href="actualites.html" class="navbar-link" data-i18n="nav.news">Aktualite</a>
+        <a href="don.html" class="navbar-link navbar-link-accent" data-i18n="nav.donate">Don</a>
       </div>
       <div class="navbar-actions">
         <div class="navbar-lang">
@@ -62,11 +62,19 @@
       <a href="../index.html" class="mobile-header-brand">
         <img src="../assets/MP3LOGO.png" alt="MP3" class="mobile-header-logo">
       </a>
-      <div class="mobile-header-lang">
-        <button class="mobile-header-lang-btn" data-lang="ht">HT</button>
-        <button class="mobile-header-lang-btn" data-lang="fr">FR</button>
-        <button class="mobile-header-lang-btn" data-lang="en">EN</button>
-        <button class="mobile-header-lang-btn" data-lang="es">ES</button>
+      <div class="mobile-header-actions">
+        <div class="mobile-header-lang">
+          <button class="mobile-header-lang-btn" data-lang="ht">HT</button>
+          <button class="mobile-header-lang-btn" data-lang="fr">FR</button>
+          <button class="mobile-header-lang-btn" data-lang="en">EN</button>
+          <button class="mobile-header-lang-btn" data-lang="es">ES</button>
+        </div>
+        <button class="navbar-icon-btn mobile-auth-btn" id="mobileAuthBtn" title="Konekte">
+          <i data-lucide="user"></i>
+        </button>
+        <button class="navbar-icon-btn navbar-admin-btn mobile-admin-btn" id="mobileAdminBtn" title="Admin" style="display:none;">
+          <i data-lucide="settings"></i>
+        </button>
       </div>
     </div>
   </header>
@@ -75,23 +83,23 @@
   <div class="mobile-nav-content">
     <a href="../index.html" class="mobile-nav-item" data-page="home">
       <i data-lucide="home"></i>
-      <span>Akèy</span>
+      <span data-i18n="nav.home">Akèy</span>
     </a>
     <a href="candidats.html" class="mobile-nav-item" data-page="candidates">
       <i data-lucide="users"></i>
-      <span>Kandida</span>
+      <span data-i18n="nav.candidates">Kandida</span>
     </a>
     <a href="don.html" class="mobile-nav-item mobile-nav-donate" data-page="don">
       <i data-lucide="heart"></i>
-      <span>Don</span>
+      <span data-i18n="nav.donate">Don</span>
     </a>
     <a href="agenda.html" class="mobile-nav-item" data-page="agenda">
       <i data-lucide="calendar"></i>
-      <span>Ajanda</span>
+      <span data-i18n="nav.agenda">Ajanda</span>
     </a>
     <a href="devenir-membre.html" class="mobile-nav-item" data-page="member">
       <i data-lucide="user-plus"></i>
-      <span>Manm</span>
+      <span data-i18n="nav.member">Manm</span>
     </a>
   </div>
   </nav>
@@ -135,11 +143,11 @@
         <section class="history-section">
           <h2 data-i18n="history.commitments">Angajman Nou</h2>
           <ul class="commitment-list">
-            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> Travay ak transparans ak entegrite</li>
-            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> Tande epi reponn bezwen pèp la</li>
-            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> Konstwi yon ekonomi ki kreye travay</li>
-            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> Asire sekirite ak stabilite pou tout moun</li>
-            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> Pwoteje anviwònman an pou jenerasyon k ap vini yo</li>
+            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> <span data-i18n="history.commitment_1">Travay ak transparans ak entegrite</span></li>
+            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> <span data-i18n="history.commitment_2">Tande epi reponn bezwen pèp la</span></li>
+            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> <span data-i18n="history.commitment_3">Konstwi yon ekonomi ki kreye travay</span></li>
+            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> <span data-i18n="history.commitment_4">Asire sekirite ak stabilite pou tout moun</span></li>
+            <li><i data-lucide="check" style="width: 18px; height: 18px; color: var(--clr-success);"></i> <span data-i18n="history.commitment_5">Pwoteje anviwònman an pou jenerasyon k ap vini yo</span></li>
           </ul>
         </section>
       </div>
@@ -154,16 +162,16 @@
       </div>
       <div class="footer-links">
         <div class="footer-col">
-          <h4>Lyen Rapide</h4>
+          <h4 data-i18n="footer.quick_links">Lyen Rapide</h4>
           <ul>
-            <li><a href="istori.html">Istwa</a></li>
-            <li><a href="candidats.html">Kandida</a></li>
-            <li><a href="actualites.html">Aktualite</a></li>
-            <li><a href="agenda.html">Ajanda</a></li>
+            <li><a href="istori.html" data-i18n="nav.history">Istwa</a></li>
+            <li><a href="candidats.html" data-i18n="nav.candidates">Kandida</a></li>
+            <li><a href="actualites.html" data-i18n="nav.news">Aktualite</a></li>
+            <li><a href="agenda.html" data-i18n="nav.agenda">Ajanda</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Kontak</h4>
+          <h4 data-i18n="footer.contact">Kontak</h4>
           <ul>
             <li>contact@mp3-ayiti.ht</li>
             <li>+509 00 00 00 00</li>
@@ -171,7 +179,7 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Rezo Sosyal</h4>
+          <h4 data-i18n="footer.social">Rezo Sosyal</h4>
           <div class="footer-social">
             <a href="#"><i data-lucide="share-2"></i></a>
             <a href="#"><i data-lucide="x"></i></a>
@@ -179,7 +187,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>2024 MP3. Tout dwa rezève.</p>
+        <p data-i18n="footer.copyright">2024 MP3. Tout dwa rezève.</p>
       </div>
     </div>
   </footer>

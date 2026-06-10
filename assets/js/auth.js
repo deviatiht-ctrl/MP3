@@ -11,6 +11,11 @@ const Auth = {
    * Initialize auth state
    */
   async init() {
+    // Setup Admin Sidebar if on admin page
+    if (document.querySelector('.admin-sidebar')) {
+      this.setupAdminSidebar();
+    }
+
     const db = await waitForSupabase();
     if (!db) return;
 
@@ -36,12 +41,74 @@ const Auth = {
   },
 
   /**
+   * Automatically configures the sidebar, mobile toggle, and overlay elements
+   * for responsive layouts on all admin pages.
+   */
+  setupAdminSidebar() {
+    const sidebar = document.querySelector('.admin-sidebar');
+    if (!sidebar) return;
+    
+    sidebar.id = 'adminSidebar';
+    
+    // Create overlay if not present
+    let overlay = document.getElementById('sidebarOverlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'admin-sidebar-overlay';
+      overlay.id = 'sidebarOverlay';
+      document.body.prepend(overlay);
+    }
+    
+    // Bind overlay click
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+    
+    // Setup mobile toggle button in header
+    const header = document.querySelector('.admin-header');
+    if (header) {
+      let toggle = header.querySelector('.admin-mobile-toggle');
+      if (!toggle) {
+        toggle = document.createElement('button');
+        toggle.className = 'admin-mobile-toggle';
+        toggle.title = 'Meni';
+        toggle.innerHTML = '<i data-lucide="menu" style="width:20px;height:20px;"></i>';
+        
+        const title = header.querySelector('.admin-header-title');
+        if (title) {
+          const wrapper = document.createElement('div');
+          wrapper.style.display = 'flex';
+          wrapper.style.alignItems = 'center';
+          wrapper.style.gap = '12px';
+          
+          header.insertBefore(wrapper, title);
+          wrapper.appendChild(toggle);
+          wrapper.appendChild(title);
+        } else {
+          header.prepend(toggle);
+        }
+      }
+      
+      toggle.addEventListener('click', () => {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+      });
+    }
+    
+    // Re-trigger lucide icons to render the new menu icon
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  },
+
+  /**
    * Check if email is in admin list
    */
   async checkAdmin(email) {
     if (!email) return false;
     
-    const db = window.db;
+    const db = await waitForSupabase();
     if (!db) return false;
 
     try {
@@ -83,6 +150,7 @@ const Auth = {
    */
   _loginPath() {
     const p = window.location.pathname;
+    if (p.includes('/pages/admin/')) return '../login.html';
     if (p.includes('/admin/')) return '../pages/login.html';
     if (p.includes('/pages/')) return 'login.html';
     return 'pages/login.html';
@@ -114,7 +182,7 @@ const Auth = {
     if (!isAdmin) {
       alert('Ou pa gen aksè administratè.');
       const p = window.location.pathname;
-      window.location.href = p.includes('/admin/') ? '../index.html' : (p.includes('/pages/') ? '../index.html' : 'index.html');
+      window.location.href = p.includes('/pages/admin/') ? '../../index.html' : (p.includes('/admin/') ? '../index.html' : (p.includes('/pages/') ? '../index.html' : 'index.html'));
       return false;
     }
     return true;

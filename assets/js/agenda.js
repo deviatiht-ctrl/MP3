@@ -13,6 +13,13 @@ const AgendaPage = {
     this.setupFilters();
     this.setupViewToggle();
     this.setupRSVP();
+
+    window.addEventListener('languageChanged', () => {
+      this.renderEvents();
+      if (this.calendar) {
+        this.initCalendar();
+      }
+    });
   },
 
   /**
@@ -65,15 +72,23 @@ const AgendaPage = {
       list.innerHTML = `
         <div class="agenda-empty">
           <i data-lucide="calendar-x" class="agenda-empty-icon"></i>
-          <h3 class="agenda-empty-title">Pa gen evènman</h3>
+          <h3 class="agenda-empty-title">${I18n.t('agenda.no_events')}</h3>
           <p class="agenda-empty-text">
-            ${this.currentFilter === 'upcoming' ? 'Pa gen evènman k ap vini pou kounye a.' : 'Pa gen evènman pase pou montre.'}
+            ${this.currentFilter === 'upcoming' ? I18n.t('agenda.no_upcoming') : I18n.t('agenda.no_past')}
           </p>
         </div>
       `;
       if (typeof lucide !== 'undefined') lucide.createIcons();
       return;
     }
+
+    const langLocales = {
+      ht: 'fr-FR',
+      fr: 'fr-FR',
+      en: 'en-US',
+      es: 'es-ES'
+    };
+    const currentLocale = langLocales[I18n.currentLang] || 'fr-FR';
 
     list.innerHTML = this.events.map(e => {
       const date = new Date(e.event_date);
@@ -84,7 +99,7 @@ const AgendaPage = {
         <div class="agenda-event-card ${isPast ? 'past' : ''}" data-id="${e.id}">
           <div class="agenda-event-date">
             <span class="agenda-event-day">${date.getDate()}</span>
-            <span class="agenda-event-month">${date.toLocaleString('fr-FR', { month: 'short' })}</span>
+            <span class="agenda-event-month">${date.toLocaleString(currentLocale, { month: 'short' })}</span>
             <span class="agenda-event-year">${date.getFullYear()}</span>
           </div>
           <div class="agenda-event-info">
@@ -92,16 +107,16 @@ const AgendaPage = {
             <div class="agenda-event-meta">
               <span>
                 <i data-lucide="clock" style="width: 14px; height: 14px;"></i>
-                ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                ${date.toLocaleTimeString(currentLocale, { hour: '2-digit', minute: '2-digit' })}
               </span>
               <span>
                 <i data-lucide="map-pin" style="width: 14px; height: 14px;"></i>
-                ${e.location || 'Kote pa defini'}
+                ${e.location || I18n.t('agenda.location_undefined')}
               </span>
               ${e.max_attendees ? `
                 <span>
                   <i data-lucide="users" style="width: 14px; height: 14px;"></i>
-                  ${e.rsvp_count || 0}/${e.max_attendees} patisipan
+                  ${e.rsvp_count || 0}/${e.max_attendees} ${I18n.t('agenda.participants')}
                 </span>
               ` : ''}
             </div>
@@ -109,7 +124,7 @@ const AgendaPage = {
             ${!isPast && e.rsvp_enabled ? `
               <span class="rsvp-badge ${isFull ? 'full' : 'open'}">
                 <i data-lucide="${isFull ? 'x-circle' : 'check-circle'}" style="width: 12px; height: 12px;"></i>
-                ${isFull ? 'Konplete' : 'Enskripsyon ouvè'}
+                ${isFull ? I18n.t('agenda.full') : I18n.t('agenda.registration_open')}
               </span>
             ` : ''}
           </div>
@@ -121,13 +136,13 @@ const AgendaPage = {
             ` : ''}
             ${!isPast && e.rsvp_enabled && !isFull ? `
               <button class="btn btn-primary rsvp-btn" data-event-id="${e.id}">
-                Enskri
+                ${I18n.t('agenda.register_btn')}
               </button>
             ` : ''}
             ${e.location_url ? `
               <a href="${e.location_url}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">
                 <i data-lucide="map" style="width: 14px; height: 14px;"></i>
-                Wè sou kat
+                ${I18n.t('agenda.see_on_map')}
               </a>
             ` : ''}
           </div>
@@ -234,8 +249,8 @@ const AgendaPage = {
     const eventData = this.events.find(e => e.id === event.id);
     if (!eventData) return;
 
-    // Simple alert for now - can be replaced with modal
-    alert(`${eventData.title}\n\n${eventData.description || ''}\n\nKote: ${eventData.location || 'Pa defini'}`);
+    const locLabel = I18n.currentLang === 'ht' ? 'Kote' : (I18n.currentLang === 'en' ? 'Location' : (I18n.currentLang === 'es' ? 'Ubicación' : 'Lieu'));
+    alert(`${eventData.title}\n\n${eventData.description || ''}\n\n${locLabel}: ${eventData.location || I18n.t('agenda.location_undefined')}`);
   },
 
   /**
@@ -252,7 +267,7 @@ const AgendaPage = {
       // Check if user is logged in
       const user = await Auth.getCurrentUser();
       if (!user) {
-        const goToLogin = confirm('Ou dwe konekte pou enskri. Ale nan paj koneksyon?');
+        const goToLogin = confirm(I18n.t('agenda.must_login'));
         if (goToLogin) {
           window.location.href = `/pages/login.html?redirect=${encodeURIComponent(window.location.pathname)}`;
         }
@@ -272,7 +287,7 @@ const AgendaPage = {
           .maybeSingle();
 
         if (existing) {
-          alert('Ou deja enskri pou evènman sa a!');
+          alert(I18n.t('agenda.already_registered'));
           return;
         }
 
@@ -288,12 +303,12 @@ const AgendaPage = {
 
         if (error) throw error;
 
-        alert('Enskripsyon reyisi! Nou konte wè ou nan evènman an.');
-        btn.textContent = 'Enskri';
+        alert(I18n.t('agenda.rsvp_success'));
+        btn.textContent = I18n.t('agenda.register_btn');
         btn.disabled = true;
       } catch (error) {
         console.error('RSVP error:', error);
-        alert('Erè pandan enskripsyon. Tanpri eseye ankò.');
+        alert(I18n.t('agenda.rsvp_error'));
       }
     });
   }

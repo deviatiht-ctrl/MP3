@@ -38,7 +38,12 @@
     "community_desc": "Creemos en la fuerza de nuestras comunidades. Cada comunidad tiene el potencial de desarrollarse localmente y contribuir al progreso nacional.",
     "equity_desc": "Nos comprometemos a reducir las desigualdades sociales y económicas, y asegurar que todos los ciudadanos tengan iguales oportunidades de éxito.",
     "efficiency_desc": "Prometemos gestionar bien los recursos del país, eliminar el desperdicio y garantizar que cada gourde gastado produzca resultados reales para el pueblo.",
-    "commitments": "Nuestros Compromisos"
+    "commitments": "Nuestros Compromisos",
+    "commitment_1": "Trabajar con transparencia e integridad",
+    "commitment_2": "Escuchar y responder a las necesidades del pueblo",
+    "commitment_3": "Construir una economía que cree empleos",
+    "commitment_4": "Garantizar seguridad y estabilidad para todos",
+    "commitment_5": "Proteger el medio ambiente para las generaciones futuras"
   },
   "candidates": {
     "title": "Nuestros Candidatos",
@@ -48,7 +53,14 @@
     "position_president": "Candidato Presidencial",
     "position_senator": "Candidato Senador",
     "position_deputy": "Candidato Diputado",
-    "position_mayor": "Candidato Alcalde"
+    "position_mayor": "Candidato Alcalde",
+    "no_candidates": "No hay candidatos disponibles en este momento.",
+    "no_candidates_matching": "No hay candidatos que coincidan con su búsqueda.",
+    "load_error": "Error al cargar los candidatos.",
+    "full_profile": "Perfil Completo",
+    "bio_undefined": "No hay biografía disponible.",
+    "accomplishments_undefined": "No hay logros enumerados.",
+    "all_haiti": "Todo Haití"
   },
   "filters": {
     "all": "Todos",
@@ -70,7 +82,13 @@
     "read_more": "Leer Más",
     "category_campaign": "Campaña",
     "category_economy": "Economía",
-    "category_region": "Región"
+    "category_region": "Región",
+    "no_news": "No hay noticias disponibles.",
+    "no_news_now": "No hay noticias disponibles en este momento.",
+    "load_error": "Error al cargar las noticias.",
+    "not_found": "Artículo no encontrado",
+    "content_undefined": "No hay contenido disponible.",
+    "views": "lecturas"
   },
   "agenda": {
     "title": "Agenda",
@@ -79,7 +97,20 @@
     "past": "Pasados",
     "list_view": "Lista",
     "calendar_view": "Calendario",
-    "register": "Inscribirse"
+    "register": "Inscribirse",
+    "no_events": "No hay eventos",
+    "no_upcoming": "No hay eventos próximos por el momento.",
+    "no_past": "No hay eventos pasados para mostrar.",
+    "location_undefined": "Ubicación no definida",
+    "participants": "participantes",
+    "full": "Completo",
+    "registration_open": "Inscripción abierta",
+    "see_on_map": "Ver en el mapa",
+    "register_btn": "Inscribirse",
+    "rsvp_success": "¡Inscripción exitosa! Esperamos verte en el evento.",
+    "rsvp_error": "Error durante el registro. Por favor intente de nuevo.",
+    "must_login": "¿Debes iniciar sesión para registrarte. ¿Ir a la página de inicio de sesión?",
+    "already_registered": "¡Ya estás registrado para este evento!"
   },
   "donation": {
     "title": "Ayúdanos a cambiar Haití. Cada donación marca la diferencia.",
@@ -178,5 +209,77 @@
     "save": "Guardar",
     "cancel": "Cancelar",
     "export": "Exportar CSV"
+  },
+  "common": {
+    "db_error": "Error de conexión. Por favor intente de nuevo."
+  },
+  "membre": {
+    "dashboard": "Espacio del Miembro",
+    "no_messages": "No hay mensajes en este momento.",
+    "no_events_registered": "Aún no te has registrado en ningún evento.",
+    "certificate_btn": "Certificado",
+    "certificate_active_only": "Certificado disponible solo para miembros activos.",
+    "update_success": "¡Información actualizada con éxito!",
+    "update_error": "Error al actualizar. Por favor intente de nuevo.",
+    "status_labels": {
+      "pending": "Pendiente",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "rejected": "Rechazado"
+    },
+    "info_labels": {
+      "full_name": "Nombre Completo",
+      "date_of_birth": "Fecha de Nacimiento",
+      "nin": "NIN/CIN",
+      "department": "Departamento",
+      "commune": "Comuna",
+      "address": "Dirección",
+      "phone": "Teléfono",
+      "email": "Correo"
+    },
+    "sidebar": {
+      "home": "Inicio",
+      "profile": "Mi Perfil",
+      "agenda": "Agenda",
+      "messages": "Mensajes",
+      "settings": "Configuración",
+      "back_to_site": "Volver al Sitio",
+      "logout": "Cerrar Sesión"
+    },
+    "tab_titles": {
+      "home": "Inicio",
+      "profile": "Mi Perfil",
+      "agenda": "Agenda",
+      "messages": "Mensajes",
+      "settings": "Configuración"
+    },
+    "headings": {
+      "personal_info": "Información Personal",
+      "registered_events": "Mis Eventos Registrados",
+      "preferences": "Preferences"
+    },
+    "stats": {
+      "events_participated": "Eventos participados",
+      "donations_made": "Donaciones realizadas",
+      "messages": "Mensajes"
+    },
+    "labels": {
+      "language": "Idioma",
+      "notifications": "Notificaciones",
+      "email_events": "Correos de eventos",
+      "party_news": "Noticias del partido"
+    }
+  },
+  "login": {
+    "welcome": "Bienvenido a MP3",
+    "subtitle": "Inicie sesión para acceder a su espacio de miembro",
+    "enter_email_first": "Ingrese su correo primero.",
+    "email_reset_sent": "Hemos enviado un correo para restablecer su contraseña.",
+    "loading": "Cargando...",
+    "incorrect_credentials": "Correo o contraseña incorrecta. Por favor intente de nuevo.",
+    "or_divider": "o",
+    "back_to_home": "← Volver al Inicio",
+    "no_account": "¿No tienes cuenta?",
+    "become_member": "Hacerse Miembro de MP3"
   }
 }

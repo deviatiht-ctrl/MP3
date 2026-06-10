@@ -38,7 +38,12 @@
     "community_desc": "We believe in the strength of our communities. Each community has the potential to develop locally and contribute to national progress.",
     "equity_desc": "We are committed to reducing social and economic inequalities, and ensuring that all citizens have equal opportunities to succeed.",
     "efficiency_desc": "We promise to manage the country's resources well, eliminate waste, and guarantee that every gourde spent produces real results for the people.",
-    "commitments": "Our Commitments"
+    "commitments": "Our Commitments",
+    "commitment_1": "Work with transparency and integrity",
+    "commitment_2": "Listen and respond to the people's needs",
+    "commitment_3": "Build an economy that creates jobs",
+    "commitment_4": "Ensure security and stability for everyone",
+    "commitment_5": "Protect the environment for future generations"
   },
   "candidates": {
     "title": "Our Candidates",
@@ -48,7 +53,14 @@
     "position_president": "Presidential Candidate",
     "position_senator": "Senate Candidate",
     "position_deputy": "Deputy Candidate",
-    "position_mayor": "Mayoral Candidate"
+    "position_mayor": "Mayoral Candidate",
+    "no_candidates": "No candidates available at the moment.",
+    "no_candidates_matching": "No candidates match your search.",
+    "load_error": "Error loading candidates.",
+    "full_profile": "Full Profile",
+    "bio_undefined": "No biography available.",
+    "accomplishments_undefined": "No accomplishments listed.",
+    "all_haiti": "All Haiti"
   },
   "filters": {
     "all": "All",
@@ -70,7 +82,13 @@
     "read_more": "Read More",
     "category_campaign": "Campaign",
     "category_economy": "Economy",
-    "category_region": "Region"
+    "category_region": "Region",
+    "no_news": "No news available.",
+    "no_news_now": "No news available at the moment.",
+    "load_error": "Error loading news.",
+    "not_found": "Article not found",
+    "content_undefined": "No content available.",
+    "views": "views"
   },
   "agenda": {
     "title": "Agenda",
@@ -79,7 +97,20 @@
     "past": "Past",
     "list_view": "List",
     "calendar_view": "Calendar",
-    "register": "Register"
+    "register": "Register",
+    "no_events": "No events",
+    "no_upcoming": "No upcoming events at the moment.",
+    "no_past": "No past events to show.",
+    "location_undefined": "Location undefined",
+    "participants": "participants",
+    "full": "Full",
+    "registration_open": "Registration open",
+    "see_on_map": "See on map",
+    "register_btn": "Register",
+    "rsvp_success": "Registration successful! We hope to see you at the event.",
+    "rsvp_error": "Error during registration. Please try again.",
+    "must_login": "You must log in to register. Go to login page?",
+    "already_registered": "You are already registered for this event!"
   },
   "donation": {
     "title": "Help us change Haiti. Every donation makes a difference.",
@@ -178,5 +209,77 @@
     "save": "Save",
     "cancel": "Cancel",
     "export": "Export CSV"
+  },
+  "common": {
+    "db_error": "Connection error. Please try again."
+  },
+  "membre": {
+    "dashboard": "Member Space",
+    "no_messages": "No messages at the moment.",
+    "no_events_registered": "You have not registered for any events yet.",
+    "certificate_btn": "Certificate",
+    "certificate_active_only": "Certificate only available for active members.",
+    "update_success": "Information updated successfully!",
+    "update_error": "Error during update. Please try again.",
+    "status_labels": {
+      "pending": "Pending",
+      "active": "Active",
+      "inactive": "Inactive",
+      "rejected": "Rejected"
+    },
+    "info_labels": {
+      "full_name": "Full Name",
+      "date_of_birth": "Date of Birth",
+      "nin": "NIN/CIN",
+      "department": "Department",
+      "commune": "Commune",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "sidebar": {
+      "home": "Home",
+      "profile": "My Profile",
+      "agenda": "Agenda",
+      "messages": "Messages",
+      "settings": "Settings",
+      "back_to_site": "Back to Site",
+      "logout": "Log Out"
+    },
+    "tab_titles": {
+      "home": "Home",
+      "profile": "My Profile",
+      "agenda": "Agenda",
+      "messages": "Messages",
+      "settings": "Settings"
+    },
+    "headings": {
+      "personal_info": "Personal Information",
+      "registered_events": "My Registered Events",
+      "preferences": "Preferences"
+    },
+    "stats": {
+      "events_participated": "Events participated",
+      "donations_made": "Donations made",
+      "messages": "Messages"
+    },
+    "labels": {
+      "language": "Language",
+      "notifications": "Notifications",
+      "email_events": "Event emails",
+      "party_news": "Party news"
+    }
+  },
+  "login": {
+    "welcome": "Welcome to MP3",
+    "subtitle": "Log in to access your member space",
+    "enter_email_first": "Enter your email first.",
+    "email_reset_sent": "We have sent an email to reset your password.",
+    "loading": "Loading...",
+    "incorrect_credentials": "Incorrect email or password. Please try again.",
+    "or_divider": "or",
+    "back_to_home": "← Back to Home",
+    "no_account": "No account?",
+    "become_member": "Become a Member"
   }
 }

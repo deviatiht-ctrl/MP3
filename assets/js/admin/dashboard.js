@@ -8,7 +8,8 @@ const AdminDashboard = {
   charts: {},
 
   async init() {
-    await Auth.requireAdmin();
+    const isAllowed = await Auth.requireAdmin();
+    if (!isAllowed) return;
     await this.loadStats();
     await this.loadCharts();
     this.loadRecentActivity();

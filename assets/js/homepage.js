@@ -10,6 +10,31 @@ const Homepage = {
     await this.loadActualites();
     await this.loadAgenda();
     this.loadMissionContent();
+
+    window.addEventListener('languageChanged', () => {
+      if (this.candidatesData) this.renderCandidates(document.querySelector('.candidats-grid'), this.candidatesData);
+      if (this.articlesData) this.renderActualites(document.querySelector('.actualites-grid'), this.articlesData);
+      if (this.agendaData) this.renderAgenda(document.querySelector('.agenda-timeline'), this.agendaData);
+    });
+  },
+
+  translatePosition(position) {
+    if (!position) return '';
+    const pos = position.toLowerCase();
+    if (pos.includes('prezidan') || pos.includes('president')) return I18n.t('candidates.position_president', position);
+    if (pos.includes('senatè') || pos.includes('senator')) return I18n.t('candidates.position_senator', position);
+    if (pos.includes('depite') || pos.includes('deputy')) return I18n.t('candidates.position_deputy', position);
+    if (pos.includes('majistra') || pos.includes('mayor')) return I18n.t('candidates.position_mayor', position);
+    return position;
+  },
+
+  translateCategory(category) {
+    if (!category) return '';
+    const cat = category.toLowerCase();
+    if (cat === 'campagne' || cat === 'campaign' || cat === 'kanpay') return I18n.t('news.category_campaign', category);
+    if (cat === 'economy' || cat === 'économie' || cat === 'ekonomi') return I18n.t('news.category_economy', category);
+    if (cat === 'region' || cat === 'région' || cat === 'rejyon') return I18n.t('news.category_region', category);
+    return category;
   },
 
   /**
@@ -62,13 +87,14 @@ const Homepage = {
       if (error) throw error;
 
       if (data && data.length > 0) {
+        this.candidatesData = data;
         this.renderCandidates(container, data);
       } else {
-        container.innerHTML = '<p class="text-center text-muted">Pa gen kandida ki disponib kounye a.</p>';
+        container.innerHTML = `<p class="text-center text-muted">${I18n.t('candidates.no_candidates')}</p>`;
       }
     } catch (error) {
       console.error('Error loading candidates:', error);
-      container.innerHTML = '<p class="text-center text-muted">Erè nan chajman kandida yo.</p>';
+      container.innerHTML = `<p class="text-center text-muted">${I18n.t('candidates.load_error')}</p>`;
     }
   },
 
@@ -84,14 +110,14 @@ const Homepage = {
              loading="lazy">
         <div class="candidat-card-overlay">
           <h3 class="candidat-card-name">${c.full_name}</h3>
-          <p class="candidat-card-position">${c.position}</p>
+          <p class="candidat-card-position">${this.translatePosition(c.position)}</p>
           <p class="candidat-card-bio">${c.bio || ''}</p>
           <a href="pages/candidats.html?id=${c.id}" class="candidat-card-btn">
-            Wè Plis
+            ${I18n.t('candidates.see_more')}
             <i data-lucide="arrow-right" class="icon" style="width: 14px; height: 14px;"></i>
           </a>
         </div>
-        <span class="candidat-badge">${c.position}</span>
+        <span class="candidat-badge">${this.translatePosition(c.position)}</span>
       </div>
     `).join('');
 
@@ -136,13 +162,14 @@ const Homepage = {
       if (error) throw error;
 
       if (data && data.length > 0) {
+        this.articlesData = data;
         this.renderActualites(container, data);
       } else {
-        container.innerHTML = '<p class="text-center text-muted">Pa gen nouvèl ki disponib.</p>';
+        container.innerHTML = `<p class="text-center text-muted">${I18n.t('news.no_news')}</p>`;
       }
     } catch (error) {
       console.error('Error loading actualites:', error);
-      container.innerHTML = '<p class="text-center text-muted">Erè nan chajman nouvèl yo.</p>';
+      container.innerHTML = `<p class="text-center text-muted">${I18n.t('news.load_error')}</p>`;
     }
   },
 
@@ -159,7 +186,7 @@ const Homepage = {
                alt="${featured.title}" loading="lazy">
         </div>
         <div class="actualite-featured-content">
-          <span class="actualite-category ${featured.category}">${featured.category}</span>
+          <span class="actualite-category ${featured.category}">${this.translateCategory(featured.category)}</span>
           <h3 class="actualite-title">${featured.title}</h3>
           <p class="actualite-excerpt">${featured.excerpt || ''}</p>
           <time class="actualite-date">${I18n.formatDate(featured.published_at)}</time>
@@ -172,7 +199,7 @@ const Homepage = {
                  alt="${a.title}" loading="lazy">
           </div>
           <div class="actualite-card-content">
-            <span class="actualite-category ${a.category}">${a.category}</span>
+            <span class="actualite-category ${a.category}">${this.translateCategory(a.category)}</span>
             <h3 class="actualite-title">${a.title}</h3>
             <p class="actualite-excerpt">${a.excerpt || ''}</p>
             <time class="actualite-date">${I18n.formatDate(a.published_at)}</time>
@@ -215,9 +242,10 @@ const Homepage = {
       if (error) throw error;
 
       if (data && data.length > 0) {
+        this.agendaData = data;
         this.renderAgenda(container, data);
       } else {
-        container.innerHTML = '<p class="text-center text-muted" style="color: rgba(255,255,255,0.6);">Pa gen evènman ki anonse.</p>';
+        container.innerHTML = `<p class="text-center text-muted" style="color: rgba(255,255,255,0.6);">${I18n.t('agenda.no_upcoming')}</p>`;
       }
     } catch (error) {
       console.error('Error loading agenda:', error);
@@ -228,22 +256,30 @@ const Homepage = {
    * Render agenda timeline
    */
   renderAgenda(container, events) {
+    const langLocales = {
+      ht: 'fr-FR',
+      fr: 'fr-FR',
+      en: 'en-US',
+      es: 'es-ES'
+    };
+    const currentLocale = langLocales[I18n.currentLang] || 'fr-FR';
+
     container.innerHTML = events.map(e => {
       const date = new Date(e.event_date);
       return `
         <div class="agenda-item">
           <div class="agenda-date">
             <span class="agenda-day">${date.getDate()}</span>
-            <span class="agenda-month">${date.toLocaleString('fr-FR', { month: 'short' })}</span>
+            <span class="agenda-month">${date.toLocaleString(currentLocale, { month: 'short' })}</span>
           </div>
           <h3 class="agenda-title">${e.title}</h3>
           <div class="agenda-location">
             <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i>
-            ${e.location || 'Kote pa defini'}
+            ${e.location || I18n.t('agenda.location_undefined')}
           </div>
           ${e.rsvp_enabled ? `
             <button class="agenda-btn" onclick="window.location.href='pages/agenda.html'">
-              Enskri
+              ${I18n.t('agenda.register_btn')}
               <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
             </button>
           ` : ''}

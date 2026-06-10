@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../assets/css/variables.css">
   <link rel="stylesheet" href="../assets/css/main.css">
   <link rel="stylesheet" href="../assets/css/auth.css">
+  <script src="../assets/js/i18n.js" defer></script>
 
   <style>
     .auth-page {
@@ -81,8 +82,8 @@
         <div class="auth-logo">
           <img src="../assets/MP3LOGO.png" alt="MP3">
         </div>
-        <h1 class="auth-title">Byenveni nan MP3</h1>
-        <p class="auth-subtitle">Konekte pou aksede ak espas manm ou</p>
+        <h1 class="auth-title" data-i18n="login.welcome">Byenveni nan MP3</h1>
+        <p class="auth-subtitle" data-i18n="login.subtitle">Konekte pou aksede ak espas manm ou</p>
       </div>
 
       <div class="auth-body">
@@ -90,7 +91,7 @@
 
         <form id="loginForm" autocomplete="off">
           <div class="form-group">
-            <label>Imèl</label>
+            <label data-i18n="auth.email">Imèl</label>
             <div class="auth-input-wrap">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
               <input type="email" name="email" class="auth-input" placeholder="ou@email.com" required>
@@ -98,7 +99,7 @@
           </div>
 
           <div class="form-group">
-            <label>Modpas</label>
+            <label data-i18n="auth.password">Modpas</label>
             <div class="auth-input-wrap">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               <input type="password" name="password" id="passwordInput" class="auth-input" placeholder="••••••••" required>
@@ -109,17 +110,17 @@
           </div>
 
           <div class="auth-options">
-            <a href="#" class="auth-forgot" id="forgotLink">Bliye modpas?</a>
+            <a href="#" class="auth-forgot" id="forgotLink" data-i18n="auth.forgot_password">Bliye modpas?</a>
           </div>
 
-          <button type="submit" class="auth-btn" id="loginBtn">Konekte</button>
+          <button type="submit" class="auth-btn" id="loginBtn" data-i18n="auth.login">Konekte</button>
         </form>
 
-        <div class="auth-divider">oubyen</div>
+        <div class="auth-divider" data-i18n="login.or_divider">oubyen</div>
 
         <div class="auth-footer">
-          <p>Pa gen kont? <a href="devenir-membre.html">Vin Manm MP3</a></p>
-          <p style="margin-top: var(--space-2);"><a href="../index.html" style="color: var(--clr-text-muted); font-weight: 400;">← Tounen sou Akèy</a></p>
+          <p><span data-i18n="login.no_account">Pa gen kont?</span> <a href="devenir-membre.html" data-i18n="login.become_member">Vin Manm MP3</a></p>
+          <p style="margin-top: var(--space-2);"><a href="../index.html" style="color: var(--clr-text-muted); font-weight: 400;" data-i18n="login.back_to_home">← Tounen sou Akèy</a></p>
         </div>
       </div>
     </div>
@@ -143,13 +144,13 @@
       document.getElementById('forgotLink').addEventListener('click', async (e) => {
         e.preventDefault();
         const email = form.querySelector('[name="email"]').value.trim();
-        if (!email) { errEl.textContent = 'Antre imèl ou anvan.'; errEl.classList.add('show'); return; }
+        if (!email) { errEl.textContent = I18n.t('login.enter_email_first'); errEl.classList.add('show'); return; }
         const result = await Auth.resetPassword(email);
         if (!result.error) {
           errEl.style.background = 'rgba(25,135,84,0.1)';
           errEl.style.borderColor = 'rgba(25,135,84,0.3)';
           errEl.style.color = '#198754';
-          errEl.textContent = 'Nou voye yon imèl pou reyinisyalize modpas ou.';
+          errEl.textContent = I18n.t('login.email_reset_sent');
           errEl.classList.add('show');
         }
       });
@@ -158,7 +159,7 @@
         e.preventDefault();
         errEl.classList.remove('show');
         btn.disabled = true;
-        btn.textContent = 'Chajman...';
+        btn.textContent = I18n.t('login.loading');
 
         const formData = new FormData(form);
         const result = await Auth.signIn(
@@ -168,15 +169,19 @@
 
         if (!result.error) {
           const urlParams = new URLSearchParams(window.location.search);
-          const redirect = urlParams.get('redirect') || 'membre.html';
+          let redirect = urlParams.get('redirect');
+          if (!redirect) {
+            const isAdmin = await Auth.checkAdmin(result.data.user.email);
+            redirect = isAdmin ? '../admin/index.html' : 'membre.html';
+          }
           window.location.href = redirect;
         } else {
           errEl.textContent = result.error.message === 'Invalid login credentials'
-            ? 'Imèl oswa modpas enkòrèk. Eseye ankò.'
+            ? I18n.t('login.incorrect_credentials')
             : result.error.message;
           errEl.classList.add('show');
           btn.disabled = false;
-          btn.textContent = 'Konekte';
+          btn.textContent = I18n.t('auth.login');
         }
       });
     });

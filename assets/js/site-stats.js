@@ -83,18 +83,6 @@ const SiteStats = {
     };
   },
 
-  /**
-   * Set demo stats for development (only used when explicitly enabled)
-   */
-  setDefaultStats() {
-    this.stats = {
-      active_members: { value: 2847, label: 'Manm Aktif' },
-      departments: { value: 10, label: 'Depatman' },
-      total_donations: { value: 1500000, label: 'Total Ranmase' },
-      events_count: { value: 45, label: 'Evenman' },
-      volunteers: { value: 850, label: 'Volontè' }
-    };
-  },
   
   /**
    * Display stats on the page

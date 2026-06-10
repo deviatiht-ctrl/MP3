@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Check if Supabase library is loaded
   if (typeof supabase === 'undefined') {
     console.error('Supabase library not loaded. Please check your CDN script.');
+    window.supabaseInitFailed = true;
     return;
   }
   
@@ -28,15 +29,24 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Supabase client initialized successfully');
   } catch (error) {
     console.error('Failed to initialize Supabase client:', error);
+    window.supabaseInitFailed = true;
   }
 });
 
 // Helper function to wait for Supabase to be ready
 async function waitForSupabase() {
   if (window.db) return window.db;
+  if (window.supabaseInitFailed) return null;
   
   return new Promise((resolve) => {
+    // Timeout of 2 seconds to prevent hanging if Supabase library fails to load
+    const timeout = setTimeout(() => {
+      console.warn('Supabase initialization timed out. Using offline fallback.');
+      resolve(null);
+    }, 2000);
+
     window.addEventListener('supabaseReady', (e) => {
+      clearTimeout(timeout);
       resolve(e.detail);
     }, { once: true });
   });

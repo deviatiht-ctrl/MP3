@@ -14,6 +14,23 @@ const CandidatsPage = {
     this.setupFilters();
     this.setupSearch();
     this.setupPanel();
+
+    window.addEventListener('languageChanged', () => {
+      this.renderCandidates();
+      if (this.selectedCandidate) {
+        this.renderPanel(this.selectedCandidate);
+      }
+    });
+  },
+
+  translatePosition(position) {
+    if (!position) return '';
+    const pos = position.toLowerCase();
+    if (pos.includes('prezidan') || pos.includes('president')) return I18n.t('candidates.position_president', position);
+    if (pos.includes('senatè') || pos.includes('senator')) return I18n.t('candidates.position_senator', position);
+    if (pos.includes('depite') || pos.includes('deputy')) return I18n.t('candidates.position_deputy', position);
+    if (pos.includes('majistra') || pos.includes('mayor')) return I18n.t('candidates.position_mayor', position);
+    return position;
   },
 
   /**
@@ -26,7 +43,7 @@ const CandidatsPage = {
     try {
       const db = await waitForSupabase();
       if (!db) {
-        grid.innerHTML = '<p class="text-center">Erè koneksyon. Tanpri eseye ankò.</p>';
+        grid.innerHTML = `<p class="text-center">${I18n.t('common.db_error')}</p>`;
         return;
       }
 
@@ -43,7 +60,7 @@ const CandidatsPage = {
       this.renderCandidates();
     } catch (error) {
       console.error('Error loading candidates:', error);
-      grid.innerHTML = '<p class="text-center">Erè nan chajman kandida yo.</p>';
+      grid.innerHTML = `<p class="text-center">${I18n.t('candidates.load_error')}</p>`;
     }
   },
 
@@ -55,7 +72,7 @@ const CandidatsPage = {
     if (!grid) return;
 
     if (this.filteredCandidates.length === 0) {
-      grid.innerHTML = '<p class="text-center" style="grid-column: 1/-1; padding: var(--space-12);">Pa gen kandida ki koresponn ak rechèch ou a.</p>';
+      grid.innerHTML = `<p class="text-center" style="grid-column: 1/-1; padding: var(--space-12);">${I18n.t('candidates.no_candidates_matching')}</p>`;
       return;
     }
 
@@ -65,19 +82,19 @@ const CandidatsPage = {
           <img src="${c.photo_url || 'assets/img/logo-placeholder.svg'}" 
                alt="${c.full_name}" loading="lazy">
           <span class="candidat-position-badge ${this.getPositionClass(c.position)}">
-            ${c.position}
+            ${this.translatePosition(c.position)}
           </span>
         </div>
         <div class="candidat-card-content">
           <h3 class="candidat-card-name">${c.full_name}</h3>
-          <p class="candidat-card-position-text">${c.position}</p>
+          <p class="candidat-card-position-text">${this.translatePosition(c.position)}</p>
           <p class="candidat-card-department">
             <i data-lucide="map-pin" style="width: 14px; height: 14px; display: inline;"></i>
-            ${c.department || 'Tout Ayiti'}
+            ${c.department || I18n.t('candidates.all_haiti')}
           </p>
           <div class="candidat-card-footer">
             <button class="btn btn-sm btn-secondary" onclick="CandidatsPage.openPanel('${c.id}')">
-              Profil Konplè
+              ${I18n.t('candidates.full_profile')}
             </button>
           </div>
         </div>
@@ -242,20 +259,20 @@ const CandidatsPage = {
     
     panel.querySelector('.candidat-panel-image img').src = 
       candidate.photo_url || 'assets/img/logo-placeholder.svg';
-    panel.querySelector('.candidat-panel-position').textContent = candidate.position;
+    panel.querySelector('.candidat-panel-position').textContent = this.translatePosition(candidate.position);
     panel.querySelector('.candidat-panel-name').textContent = candidate.full_name;
     panel.querySelector('.candidat-panel-dept').innerHTML = `
       <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i>
-      ${candidate.department || 'Tout Ayiti'}
+      ${candidate.department || I18n.t('candidates.all_haiti')}
     `;
-    panel.querySelector('.candidat-panel-bio').textContent = candidate.bio || 'Pa gen biyografi disponib.';
+    panel.querySelector('.candidat-panel-bio').textContent = candidate.bio || I18n.t('candidates.bio_undefined');
 
     const accList = panel.querySelector('.candidat-accomplishments');
     if (accList) {
       if (accomplishments.length > 0) {
         accList.innerHTML = accomplishments.map(acc => `<li>${acc}</li>`).join('');
       } else {
-        accList.innerHTML = '<li style="list-style: none; opacity: 0.6;">Pa gen reyalizasyon lisadwe.</li>';
+        accList.innerHTML = `<li style="list-style: none; opacity: 0.6;">${I18n.t('candidates.accomplishments_undefined')}</li>`;
       }
     }
 

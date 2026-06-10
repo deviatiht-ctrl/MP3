@@ -68,11 +68,19 @@
       <a href="index.html" class="mobile-header-brand">
         <img src="assets/MP3LOGO.png" alt="MP3" class="mobile-header-logo">
       </a>
-      <div class="mobile-header-lang">
-        <button class="mobile-header-lang-btn" data-lang="ht">HT</button>
-        <button class="mobile-header-lang-btn" data-lang="fr">FR</button>
-        <button class="mobile-header-lang-btn" data-lang="en">EN</button>
-        <button class="mobile-header-lang-btn" data-lang="es">ES</button>
+      <div class="mobile-header-actions">
+        <div class="mobile-header-lang">
+          <button class="mobile-header-lang-btn" data-lang="ht">HT</button>
+          <button class="mobile-header-lang-btn" data-lang="fr">FR</button>
+          <button class="mobile-header-lang-btn" data-lang="en">EN</button>
+          <button class="mobile-header-lang-btn" data-lang="es">ES</button>
+        </div>
+        <button class="navbar-icon-btn mobile-auth-btn" id="mobileAuthBtn" title="Konekte">
+          <i data-lucide="user"></i>
+        </button>
+        <button class="navbar-icon-btn navbar-admin-btn mobile-admin-btn" id="mobileAdminBtn" title="Admin" style="display:none;">
+          <i data-lucide="settings"></i>
+        </button>
       </div>
     </div>
   </header>
@@ -81,23 +89,23 @@
     <div class="mobile-nav-content">
       <a href="index.html" class="mobile-nav-item active" data-page="home">
         <i data-lucide="home"></i>
-        <span>Akèy</span>
+        <span data-i18n="nav.home">Akèy</span>
       </a>
       <a href="pages/candidats.html" class="mobile-nav-item" data-page="candidats">
         <i data-lucide="users"></i>
-        <span>Kandida</span>
+        <span data-i18n="nav.candidates">Kandida</span>
       </a>
       <a href="pages/don.html" class="mobile-nav-item mobile-nav-donate" data-page="don">
         <i data-lucide="heart"></i>
-        <span>Don</span>
+        <span data-i18n="nav.donate">Don</span>
       </a>
       <a href="pages/agenda.html" class="mobile-nav-item" data-page="agenda">
         <i data-lucide="calendar"></i>
-        <span>Ajanda</span>
+        <span data-i18n="nav.agenda">Ajanda</span>
       </a>
       <a href="pages/devenir-membre.html" class="mobile-nav-item" data-page="member">
         <i data-lucide="user-plus"></i>
-        <span>Manm</span>
+        <span data-i18n="nav.member">Manm</span>
       </a>
     </div>
   </nav>
