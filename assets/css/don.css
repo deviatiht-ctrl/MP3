@@ -820,3 +820,218 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Payment Tab Brand Logos ── */
+.don-payment-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.don-tab-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+.don-tab-moncash { background: #e8272c; }
+.don-tab-natcash  { background: #0047ab; }
+.don-tab-kashpaw  { background: #7c3aed; }
+
+/* ── Automatic Payment Card (MonCash/NatCash/KashPaw) ── */
+.don-payment-auto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-8) var(--space-6);
+  background: var(--clr-bg-soft);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  gap: var(--space-3);
+}
+.don-auto-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--clr-accent) 10%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.don-payment-auto h4 {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--clr-text);
+  margin: 0;
+}
+.don-payment-auto p {
+  font-size: var(--text-sm);
+  color: var(--clr-text-muted);
+  margin: 0;
+  max-width: 360px;
+}
+.don-auto-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--clr-success, #22c55e);
+  background: color-mix(in srgb, var(--clr-success, #22c55e) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--clr-success, #22c55e) 25%, transparent);
+  padding: 2px 10px;
+  border-radius: 999px;
+  margin-top: var(--space-1);
+}
+
+/* ── PLOP PLOP Inline Payment Modal ── */
+.don-plop-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-4);
+}
+.don-plop-modal-body {
+  background: var(--clr-bg);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  width: min(520px, 100%);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+}
+
+/* Spinner (while creating payment) */
+.don-plop-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-12) var(--space-8);
+  color: var(--clr-text-muted);
+}
+
+/* Waiting state wrapper */
+.don-plop-frame-wrap {
+  display: flex;
+  flex-direction: column;
+}
+.don-plop-wait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-10) var(--space-8);
+}
+.don-plop-wait h3 {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--clr-text);
+  margin: 0;
+}
+.don-plop-wait p {
+  font-size: var(--text-sm);
+  color: var(--clr-text-muted);
+  max-width: 340px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Animated ring around icon */
+.don-plop-wait-anim {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+}
+.don-plop-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid color-mix(in srgb, var(--clr-accent) 30%, transparent);
+  border-top-color: var(--clr-accent);
+  animation: spin 1.2s linear infinite;
+}
+
+/* Poll status row */
+.don-plop-poll-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--clr-text-muted);
+  background: var(--clr-bg-soft);
+  border: 1px solid var(--clr-border);
+  padding: var(--space-2) var(--space-4);
+  border-radius: 999px;
+}
+.don-plop-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f59e0b;
+  animation: pulseDot 1.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+.don-plop-reopen-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+/* Error state */
+.don-plop-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-10) var(--space-8);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spin-icon {
+  animation: spin 1s linear infinite;
+  color: var(--clr-accent);
+}
+
+/* ── Pending Verification Banner ── */
+.don-pending-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: color-mix(in srgb, #d97706 10%, transparent);
+  border: 1px solid color-mix(in srgb, #d97706 30%, transparent);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  font-size: var(--text-sm);
+  color: var(--clr-text);
+}
+.don-pending-banner span {
+  flex: 1;
+  min-width: 160px;
+}

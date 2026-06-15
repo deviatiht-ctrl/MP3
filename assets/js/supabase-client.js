@@ -82,3 +82,4 @@ function handleDbError(error, context = '') {
 // Export for use in other modules
 window.waitForSupabase = waitForSupabase;
 window.handleDbError = handleDbError;
+window.MP3_ANON_KEY = SUPABASE_ANON_KEY;

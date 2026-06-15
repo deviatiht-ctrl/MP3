@@ -16,7 +16,6 @@
   <link rel="stylesheet" href="../assets/css/don.css?v=1.0.1">
   
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-  <script src="https://js.stripe.com/v3/" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
   
@@ -170,28 +169,61 @@
         <div class="don-step-content" data-step="3">
           <h2 data-i18n="donation.payment_method">Metòd Peman</h2>
           <div class="don-payment-tabs">
-            <button class="don-payment-tab active" data-method="moncash">MonCash</button>
-            <button class="don-payment-tab" data-method="natcash">NatCash</button>
-            <button class="don-payment-tab" data-method="stripe">Kat Kredi</button>
-            <button class="don-payment-tab" data-method="paypal">PayPal</button>
-            <button class="don-payment-tab" data-method="bank">Transfè Bank</button>
+            <button class="don-payment-tab active" data-method="moncash">
+              <span class="don-tab-logo don-tab-moncash">M</span>MonCash
+            </button>
+            <button class="don-payment-tab" data-method="natcash">
+              <span class="don-tab-logo don-tab-natcash">N</span>NatCash
+            </button>
+            <button class="don-payment-tab" data-method="kashpaw">
+              <span class="don-tab-logo don-tab-kashpaw">K</span>KashPaw
+            </button>
+            <button class="don-payment-tab" data-method="bank_transfer">
+              <i data-lucide="landmark" style="width:14px;height:14px;"></i>Transfè Bank
+            </button>
           </div>
+
+          <!-- MonCash — automatic via PLOP PLOP -->
           <div class="don-payment-content active" data-method="moncash">
-            <div class="don-payment-info">
-              <p data-i18n="donation.moncash_instruction">Fè yon transfè MonCash sou nimewo sa a:</p>
-              <div class="don-moncash-number">+509 00 00 00 00</div>
-              <p class="don-payment-instruction">Apre transfè a, antre referans tranzaksyon an anba a.</p>
+            <div class="don-payment-auto">
+              <div class="don-auto-icon"><i data-lucide="zap" style="width:32px;height:32px;color:var(--clr-accent);"></i></div>
+              <h4>Peman MonCash Otomatik</h4>
+              <p>Apre ou konfime don ou, n ap voye ou dirèkteman sou paj peman MonCash la. Pa bezwen antre kòd manyèlman.</p>
+              <div class="don-auto-badge"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> Sekirize pa PLOP PLOP</div>
             </div>
           </div>
+
+          <!-- NatCash — automatic via PLOP PLOP -->
           <div class="don-payment-content" data-method="natcash">
-            <div class="don-payment-info">
-              <p data-i18n="donation.natcash_instruction">Fè yon transfè NatCash sou nimewo sa a:</p>
-              <div class="don-natcash-number">+509 00 00 00 00</div>
-              <p class="don-payment-instruction">Apre transfè a, antre referans tranzaksyon an anba a.</p>
+            <div class="don-payment-auto">
+              <div class="don-auto-icon"><i data-lucide="zap" style="width:32px;height:32px;color:var(--clr-accent);"></i></div>
+              <h4>Peman NatCash Otomatik</h4>
+              <p>Apre ou konfime don ou, n ap voye ou dirèkteman sou paj peman NatCash la. Pa bezwen antre kòd manyèlman.</p>
+              <div class="don-auto-badge"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> Sekirize pa PLOP PLOP</div>
             </div>
           </div>
-          <div class="don-payment-content" data-method="stripe">
-            <div id="card-element"></div>
+
+          <!-- KashPaw — automatic via PLOP PLOP -->
+          <div class="don-payment-content" data-method="kashpaw">
+            <div class="don-payment-auto">
+              <div class="don-auto-icon"><i data-lucide="zap" style="width:32px;height:32px;color:var(--clr-accent);"></i></div>
+              <h4>Peman KashPaw Otomatik</h4>
+              <p>Apre ou konfime don ou, n ap voye ou dirèkteman sou paj peman KashPaw la. Pa bezwen antre kòd manyèlman.</p>
+              <div class="don-auto-badge"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> Sekirize pa PLOP PLOP</div>
+            </div>
+          </div>
+
+          <!-- Bank Transfer — manual -->
+          <div class="don-payment-content" data-method="bank_transfer">
+            <div class="don-payment-info">
+              <p><strong>Fè yon virement bancaire sou enfòmasyon sa yo:</strong></p>
+              <div class="don-bank-info">
+                <p><i data-lucide="landmark" style="width:14px;height:14px;"></i> <strong>Bank:</strong> —</p>
+                <p><i data-lucide="hash" style="width:14px;height:14px;"></i> <strong>Kont:</strong> —</p>
+                <p><i data-lucide="user" style="width:14px;height:14px;"></i> <strong>Non:</strong> Mouvman Pèp pou Pwosperite ak Pwogrè</p>
+              </div>
+              <p class="don-payment-instruction" style="margin-top:var(--space-3);">Apre virement an, antre referans bankè ou nan fòm ki anba a.</p>
+            </div>
           </div>
           <div class="don-step-actions">
             <button class="btn btn-ghost don-step-prev" data-i18n="donation.back">Retounen</button>
@@ -214,9 +246,9 @@
               <label class="form-label" data-i18n="donation.phone">Telefòn</label>
               <input type="tel" name="donor_phone" class="form-input">
             </div>
-            <div class="form-group">
-              <label class="form-label" data-i18n="donation.payment_ref">Referans Peman</label>
-              <input type="text" name="payment_reference" class="form-input" placeholder="Kòd tranzaksyon">
+            <div class="form-group don-bank-ref-group" style="display:none;">
+              <label class="form-label" data-i18n="donation.payment_ref">Referans Bankè</label>
+              <input type="text" name="payment_reference" class="form-input" placeholder="Nimewo konfirmasyon virement">
             </div>
             <div class="form-checkbox">
               <label>
@@ -228,6 +260,48 @@
           <div class="don-step-actions">
             <button class="btn btn-ghost don-step-prev" data-i18n="donation.back">Retounen</button>
             <button class="btn btn-primary don-submit-btn" data-i18n="donation.confirm_donation">Konfime Don</button>
+          </div>
+        </div>
+
+        <!-- Payment inline modal (auto methods) -->
+        <div class="don-plop-modal" id="donPlopModal" style="display:none;">
+          <div class="don-plop-modal-body">
+
+            <!-- Loading while creating payment -->
+            <div class="don-plop-spinner" id="donPlopSpinner">
+              <i data-lucide="loader" style="width:40px;height:40px;" class="spin-icon"></i>
+              <p>N ap kreye peman ou...</p>
+            </div>
+
+            <!-- New-tab payment + auto-poll waiting state -->
+            <div class="don-plop-frame-wrap" id="donPlopFrameWrap" style="display:none;">
+              <div class="don-plop-wait">
+                <div class="don-plop-wait-anim">
+                  <span class="don-plop-ring"></span>
+                  <i data-lucide="smartphone" style="width:28px;height:28px;color:var(--clr-accent);"></i>
+                </div>
+                <h3 id="donPlopWaitTitle">Paj Peman An Louvri!</h3>
+                <p id="donPlopWaitDesc">Peye sou tab/fenèt ki ouvri a, epi retounen isit — konfirmasyon ap fèt <strong>otomatikman</strong>.</p>
+                <div class="don-plop-poll-row">
+                  <span class="don-plop-status-dot"></span>
+                  <span id="donPlopPollMsg">Verifikasyon otomatik ap fèt...</span>
+                </div>
+                <button class="btn btn-ghost don-plop-reopen-btn" id="donPlopReopenBtn">
+                  <i data-lucide="external-link" style="width:14px;height:14px;"></i>
+                  Ouvri Paj Peman Ankò
+                </button>
+                <button class="btn btn-ghost" style="font-size:var(--text-xs);color:var(--clr-text-muted);"
+                  onclick="DonPage.closePlopModal()">Anile</button>
+              </div>
+            </div>
+
+            <!-- Error state -->
+            <div class="don-plop-error" id="donPlopError" style="display:none;">
+              <i data-lucide="alert-circle" style="width:40px;height:40px;color:var(--clr-error);"></i>
+              <p id="donPlopErrorMsg">Yon erè fèt.</p>
+              <button class="btn btn-ghost" onclick="DonPage.closePlopModal()">Fèmen</button>
+            </div>
+
           </div>
         </div>
 
